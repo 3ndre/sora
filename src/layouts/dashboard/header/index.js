@@ -1,5 +1,10 @@
 
 import { Link as RouterLink } from 'react-router-dom';
+
+//wagmi
+
+import { useAccount } from 'wagmi'
+
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, Button } from '@mui/material';
@@ -13,7 +18,7 @@ import Logo from '../../../components/Logo';
 
 //
 import Searchbar from './Searchbar';
-// import AccountPopover from './AccountPopover';
+import AccountPopover from './AccountPopover';
 // import LanguagePopover from './LanguagePopover';
 // import ChatPopover from './ChatPopover';
 // import NotificationsPopover from './NotificationsPopover';
@@ -44,6 +49,8 @@ export default function DashboardHeader() {
   
   const isDesktop = useResponsive('up', 'lg');
 
+  const { isConnected } = useAccount()
+
   return (
     <RootStyle>
       <Toolbar
@@ -59,15 +66,18 @@ export default function DashboardHeader() {
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
-        <Stack direction="row" alignItems="center">
+        <Stack direction="row" alignItems="center" >
 
+        {isConnected ? null : <>
         {isDesktop && <Button sx={{ mr: 2 }} to="/connect" fullWidth variant="contained" component={RouterLink}>Connect Wallet</Button>}
         {!isDesktop && <Button sx={{ mr: 1 }} to="/connect" fullWidth variant="contained" component={RouterLink}>Connect</Button>}
-          
+        </>
+        }
+        
           {/* <LanguagePopover />
           <NotificationsPopover /> */}
           {/* <ChatPopover/> */}
-          {/* <AccountPopover /> */}
+          {isConnected && <AccountPopover />}
           <Settings/>
         </Stack>
         
