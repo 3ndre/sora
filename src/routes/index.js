@@ -28,6 +28,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: '/', element: <Home /> },
+        { path: 'profile', element: <Profile/> },
       ],
     },
     {
@@ -35,7 +36,6 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: 'connect', element: <Connect/> },
-        { path: 'profile', element: <Profile/> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" replace /> },
       ],

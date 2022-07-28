@@ -1,54 +1,59 @@
-// import { Link as RouterLink } from 'react-router-dom';
+import {useState, useEffect} from 'react';
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Container, Typography} from '@mui/material';
-// layouts
-import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
-
+import { Container, Grid } from '@mui/material';
+// hooks
+import useSettings from '../hooks/useSettings';
 // components
 import Page from '../components/Page';
+import NftCard from './profile/NftCard';
 
-
-
-// ----------------------------------------------------------------------
-
-const RootStyle = styled('div')(({ theme }) => ({
-  display: 'flex',
-  minHeight: '100%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: theme.spacing(12, 0),
-}));
 
 // ----------------------------------------------------------------------
 
 export default function Profile() {
+  const { themeStretch } = useSettings();
   
+  const [nfts, setNfts] = useState([]);
+
+  const walletAddress = localStorage.getItem('walletAddress');
+
+  const getNftData = async () => {
+
+   
+
+    if (walletAddress === null || '')  return;
+
+    const response = await fetch(`https://api.rarible.org/v0.1/items/byOwner/?owner=ETHEREUM:${walletAddress}`);
+    const data = await response.json();
+    
+    setNfts(data.items);
+
+
+  }
+
+  useEffect(() => {
+    getNftData();
+  }, [walletAddress])
 
   return (
-    <Page title="Connect Wallet" sx={{ height: 1 }}>
-      <RootStyle>
-        <LogoOnlyLayout />
+    <Page title="Profile">
+      <Container maxWidth={themeStretch ? false : 'xl'}>
+        <Grid container spacing={3}>
 
-        <Container>
-          <Box sx={{ maxWidth: 480, mx: 'auto', textAlign: 'center' }}>
+            {nfts.map((nft) => {
+              return (
+              <Grid item xs={12} md={8} key={nft.id}>
 
-              <>
-                <Typography variant="h3" paragraph>
-                  Profile Wallet
-                </Typography>
-                <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                    Choose how you want to connect.
-                </Typography>
+                <NftCard nft={nft}/>
+             
+            </Grid>
+            )}
+            )}
 
-               
-                
-
-                </>
-           
-          </Box>
-        </Container>
-      </RootStyle>
+            
+            
+          </Grid>
+      </Container>
     </Page>
   );
 }
