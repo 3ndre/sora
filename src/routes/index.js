@@ -28,7 +28,10 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: '/', element: <Home /> },
+        { path: 'explore', element: <Spaces /> },
         { path: 'profile', element: <Profile/> },
+        { path: 'space', element: <SpacePage/> },
+        { path: 'create', element: <CreateSpace/> },
       ],
     },
     {
@@ -47,6 +50,9 @@ export default function Router() {
 
 // Dashboard
 const Home = Loadable(lazy(() => import('../pages/Home')));
+const Spaces = Loadable(lazy(() => import('../pages/Spaces')));
+const CreateSpace = Loadable(lazy(() => import('../pages/CreateSpace')));
 const Connect = Loadable(lazy(() => import('../pages/Connect')));
 const Profile = Loadable(lazy(() => import('../pages/Profile')));
+const SpacePage = Loadable(lazy(() => import('../pages/SpacePage')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));

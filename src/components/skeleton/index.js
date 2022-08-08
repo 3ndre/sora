@@ -1,6 +1,7 @@
 export { default as SkeletonMap } from './SkeletonMap';
 export { default as SkeletonPost } from './SkeletonPost';
 export { default as SkeletonProduct } from './SkeletonProduct';
+export { default as SkeletonSpaceCard } from './SkeletonSpaceCard';
 export { default as SkeletonPostItem } from './SkeletonPostItem';
 export { default as SkeletonProductItem } from './SkeletonProductItem';
 export { default as SkeletonKanbanColumn } from './SkeletonKanbanColumn';

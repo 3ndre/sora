@@ -1,6 +1,8 @@
+import {Link as RouterLink} from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Typography, Button, Card, CardContent } from '@mui/material';
+import useResponsive from '../../hooks/useResponsive';
 //
 import { MotivationIllustration } from '../../assets';
 
@@ -22,6 +24,9 @@ const RootStyle = styled(Card)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomeBanner() {
+
+  const isDesktop = useResponsive('up', 'lg');
+
   return (
     <RootStyle>
       <CardContent
@@ -40,16 +45,19 @@ export default function HomeBanner() {
           Don't know where to start? Check out some of the free places you can join right now.
         </Typography>
 
-        <Button variant="contained">Explore</Button>
+        <Button variant="contained" to="/explore" component={RouterLink}>Explore</Button>
       </CardContent>
 
-      <MotivationIllustration
+      {isDesktop && <MotivationIllustration
         sx={{
           p: 3,
           width: 360,
           margin: { xs: 'auto', md: 'inherit' }
         }}
-      />
+      />}
+
+    
+      
     </RootStyle>
   );
 }

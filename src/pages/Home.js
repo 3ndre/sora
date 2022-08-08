@@ -10,7 +10,7 @@ import HomeTrending from '../sections/general/HomeTrending';
 
 // ----------------------------------------------------------------------
 
-export default function PageOne() {
+export default function Home() {
   const { themeStretch } = useSettings();
 
   return (

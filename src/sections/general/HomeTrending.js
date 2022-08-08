@@ -59,8 +59,8 @@ export default function HomeTrending() {
   return (
     <Box sx={{ py: 2 }}>
       <CardHeader
-        title="Trending place"
-        subheader="See what's happening in the place"
+        title="Trending spaces"
+        subheader="Explores the most popular spaces"
         action={
           <CarouselArrows
             customIcon={'ic:round-keyboard-arrow-right'}
@@ -104,6 +104,24 @@ function TrendingItem({ item }) {
 
   return (
     <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: 'background.neutral' }}>
+
+<Box sx={{ p: 1, position: 'relative' }}>
+        <Label
+          variant="filled"
+          color={(roomType === 'king' && 'error') || (roomType === 'double' && 'info') || 'warning'}
+          sx={{
+            right: 16,
+            zIndex: 9,
+            bottom: 16,
+            position: 'absolute',
+            textTransform: 'capitalize',
+          }}
+        >
+          {roomType}
+        </Label>
+        <Image src={cover} ratio="1/1" sx={{ borderRadius: 1.5 }} />
+      </Box>
+
       <Stack spacing={2.5} sx={{ p: 3, pb: 2.5 }}>
         <Stack direction="row" alignItems="center" spacing={2}>
           <Avatar alt={name} src={avatar} />
@@ -128,22 +146,7 @@ function TrendingItem({ item }) {
         </Stack>
       </Stack>
 
-      <Box sx={{ p: 1, position: 'relative' }}>
-        <Label
-          variant="filled"
-          color={(roomType === 'king' && 'error') || (roomType === 'double' && 'info') || 'warning'}
-          sx={{
-            right: 16,
-            zIndex: 9,
-            bottom: 16,
-            position: 'absolute',
-            textTransform: 'capitalize',
-          }}
-        >
-          {roomType}
-        </Label>
-        <Image src={cover} ratio="1/1" sx={{ borderRadius: 1.5 }} />
-      </Box>
+      
     </Paper>
   );
 }

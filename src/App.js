@@ -5,11 +5,14 @@ import ThemeProvider from './theme';
 
 //wagmi
 import {
+  chain,
   WagmiConfig,
   createClient,
   defaultChains,
   configureChains,
 } from 'wagmi'
+
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 
 import { publicProvider } from 'wagmi/providers/public'
@@ -30,8 +33,8 @@ import MotionLazyContainer from './components/animate/MotionLazyContainer';
 // ----------------------------------------------------------------------
 
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  // alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+const { chains, provider, webSocketProvider } = configureChains([chain.polygonMumbai], [
+  alchemyProvider({ apiKey: process.env.ALCHEMY_KEY }),
   publicProvider(), //not to use in production
 ])
 

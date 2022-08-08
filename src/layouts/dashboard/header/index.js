@@ -19,6 +19,7 @@ import Logo from '../../../components/Logo';
 //
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
+import CreatePopover from './CreatePopover';
 // import LanguagePopover from './LanguagePopover';
 // import ChatPopover from './ChatPopover';
 // import NotificationsPopover from './NotificationsPopover';
@@ -77,6 +78,7 @@ export default function DashboardHeader() {
           {/* <LanguagePopover />
           <NotificationsPopover /> */}
           {/* <ChatPopover/> */}
+          {isConnected && <CreatePopover />}
           {isConnected && <AccountPopover />}
           <Settings/>
         </Stack>
