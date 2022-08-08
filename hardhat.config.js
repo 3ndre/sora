@@ -1,6 +1,38 @@
-require("@nomicfoundation/hardhat-toolbox");
+require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-ethers");
+const fs = require('fs');
+// const infuraId = fs.readFileSync(".infuraid").toString().trim() || "";
 
-/** @type import('hardhat/config').HardhatUserConfig */
+task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners();
+
+  for (const account of accounts) {
+    console.log(account.address);
+  }
+});
+
+
 module.exports = {
-  solidity: "0.8.9",
+  defaultNetwork: "hardhat",
+  networks: {
+    hardhat: {
+      chainId: 1337
+    },
+    matic: {
+      url: process.env.MATIC_MUMBAI_URL, 
+      accounts: process.env.PRIVATE_KEY,
+    }
+  },
+  solidity: {
+    version: "0.8.4",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      }
+    }
+  }
 };
+
+
+
