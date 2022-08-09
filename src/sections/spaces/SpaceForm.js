@@ -80,7 +80,7 @@ export default function SpaceForm() {
         const priced = ethers.utils.parseEther(formParams.price, 'ether');
         const privateAddress = [];
 
-        let minting = await contract.mint(metadataURL, (2).toString(), formParams.supplypass.toString(), priced, privateAddress);
+        let minting = await contract.mint(metadataURL, (1).toString(), formParams.supplypass.toString(), priced, privateAddress);
         await minting.wait();
 
         updateMessage('Space created successfully!');

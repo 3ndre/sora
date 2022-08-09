@@ -170,13 +170,13 @@ useEffect(() => {
         <Typography variant="h3" sx={{mb: 3}}>
                 {tokenamount > 0 || address === data.owner ? <><span style={{color: 'gray'}}>Welcome to</span> {data.spacename} </> : <>Join {data.spacename}</>}
         </Typography>
-        {tokenamount > 0 || address === data.owner && (
+        {tokenamount > 0 || address === data.owner ? (
         <Box sx={{ flexShrink: 0 }}> 
         <Label color={'success'} sx={{ textTransform: 'capitalize' }}>
           Members Only
         </Label>
         </Box>
-        )}
+        ) : null}
           
         </Box>
 
