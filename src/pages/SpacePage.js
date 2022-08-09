@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Tab, Box, Card, Tabs, Container } from '@mui/material';
+import { Tab, Box, Card, Tabs, Container, Typography } from '@mui/material';
 
 // hooks
 import useAuth from '../hooks/useAuth';
@@ -73,7 +73,7 @@ export default function SpacePage() {
       component: <SpaceMarket followers={_userFollowers} />,
     },
     {
-      value: 'members',
+      value: 'holders',
       icon: <Iconify icon={'icon-park-solid:passport'} width={20} height={20} />,
       component: <SpaceMembers friends={_userFriends} findFriends={findFriends} onFindFriends={handleFindFriends} />,
     },
@@ -91,6 +91,10 @@ export default function SpacePage() {
   return (
     <Page title="Space">
       <Container maxWidth={themeStretch ? false : 'lg'}>
+
+          <Typography variant="h3" sx={{mb: 3}}>
+                  Soraspace
+                </Typography>
        
        
             <Tabs

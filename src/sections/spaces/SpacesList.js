@@ -16,7 +16,6 @@ import { SkeletonSpaceCard } from '../../components/skeleton';
 export default function SpaceList({data}) {
   const { themeStretch } = useSettings();
 
-  console.log(data)
 
   return (
     <Page title="Explore">

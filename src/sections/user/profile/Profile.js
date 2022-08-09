@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types';
 // @mui
-import { Grid, Stack } from '@mui/material';
+import { Grid } from '@mui/material';
 //
-import ProfileAbout from './ProfileAbout';
-import ProfilePostCard from './ProfilePostCard';
-import ProfilePostInput from './ProfilePostInput';
-import ProfileFollowInfo from './ProfileFollowInfo';
-import ProfileSocialInfo from './ProfileSocialInfo';
+
 import NFTList from '../../../sections/card/NFTList';
 
 // ----------------------------------------------------------------------

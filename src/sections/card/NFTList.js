@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
+
 import { useAccount } from 'wagmi'
 import {useState, useEffect} from 'react';
 // @mui
 import { Box } from '@mui/material';
-// components
-import { SkeletonProductItem } from '../../components/skeleton';
+
 //
 import NFTCard from './NFTCard';
 
@@ -17,7 +16,6 @@ export default function NFTList() {
 
   const getNftData = async () => {
 
-   
 
     if (!isConnected)  return;
 

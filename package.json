@@ -51,6 +51,7 @@
     "date-fns": "^2.28.0",
     "emoji-mart": "^5.2.0",
     "ethers": "^5.6.9",
+    "form-data": "^4.0.0",
     "framer-motion": "^6.2.8",
     "fs": "*",
     "history": "^5.3.0",

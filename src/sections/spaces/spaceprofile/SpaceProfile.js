@@ -6,10 +6,7 @@ import SpaceAbout from './SpaceAbout';
 import SpacePostCard from './SpacePostCard';
 import SpacePostInput from './SpacePostInput';
 import SpaceMemberInfo from './SpaceMemberInfo';
-import NFTList from '../../card/NFTList';
 import SpaceMainCard from './SpaceMainCard';
-import SpaceTopCard from '../../card/SpaceTopCard';
-
 import useResponsive from '../../../hooks/useResponsive';
 
 // ----------------------------------------------------------------------

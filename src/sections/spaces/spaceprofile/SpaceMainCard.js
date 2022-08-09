@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Card, Avatar, Divider, Typography, Stack } from '@mui/material';
-// utils
-import cssStyles from '../../../utils/cssStyles';
+
+import { Box, Card, Avatar, Typography} from '@mui/material';
+
 
 // components
 import Image from '../../../components/Image';

@@ -7,27 +7,21 @@ import {
   Link,
   Card,
   Stack,
-  Paper,
-  Avatar,
   Checkbox,
-  TextField,
   Typography,
   CardHeader,
   IconButton,
-  AvatarGroup,
-  InputAdornment,
   FormControlLabel,
 } from '@mui/material';
-// hooks
-import useAuth from '../../../hooks/useAuth';
+
 // utils
 import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
 // components
-import Image from '../../../components/Image';
+
 import Iconify from '../../../components/Iconify';
 import MyAvatar from '../../../components/MyAvatar';
-import EmojiPicker from '../../../components/EmojiPicker';
+
 
 // ----------------------------------------------------------------------
 
@@ -36,19 +30,17 @@ SpacePostCard.propTypes = {
 };
 
 export default function SpacePostCard({ post }) {
-  const { user } = useAuth();
+ 
 
   const commentInputRef = useRef(null);
 
-  const fileInputRef = useRef(null);
 
   const [isLiked, setLiked] = useState(post.isLiked);
 
   const [likes, setLikes] = useState(post.personLikes.length);
 
-  const [message, setMessage] = useState('');
 
-  const hasComments = post.comments.length > 0;
+  
 
   const handleLike = () => {
     setLiked(true);
@@ -60,13 +52,7 @@ export default function SpacePostCard({ post }) {
     setLikes((prevLikes) => prevLikes - 1);
   };
 
-  const handleChangeMessage = (value) => {
-    setMessage(value);
-  };
 
-  const handleClickAttach = () => {
-    fileInputRef.current?.click();
-  };
 
   const handleClickComment = () => {
     commentInputRef.current?.focus();

@@ -62,7 +62,7 @@ export default function SpaceCard({space}) {
       </Typography>
 
       <Stack sx={{py: 2}} alignItems="center">
-      <Button to="/space" variant="contained" component={RouterLink}>Join</Button>
+      <Button to={`/space/${space.tokenId}`} variant="contained" component={RouterLink}>Join</Button>
       </Stack>
 
 
