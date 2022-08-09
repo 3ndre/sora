@@ -20,7 +20,7 @@ export default function SpaceProfile({ data, tokensCollected }) {
       
       <Grid item xs={12} md={4}>
         <Stack spacing={3}>
-          <SpaceMainCard data={data}/>
+          <SpaceMainCard data={data} tokensCollected={tokensCollected}/>
           
         </Stack>
       </Grid>

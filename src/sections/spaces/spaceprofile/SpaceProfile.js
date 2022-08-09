@@ -6,7 +6,7 @@ import SpaceAbout from './SpaceAbout';
 import SpacePostCard from './SpacePostCard';
 import SpacePostInput from './SpacePostInput';
 import SpaceMemberInfo from '../spacebuy/SpaceMemberInfo';
-import SpaceMainCard from '../spacebuy/SpaceMainCard';
+import SpaceMainCard2 from '../spacebuy/SpaceMainCard2';
 import useResponsive from '../../../hooks/useResponsive';
 
 // ----------------------------------------------------------------------
@@ -38,7 +38,7 @@ export default function SpaceProfile({ data, tokensCollected }) {
       {isDesktop && 
       <Grid item xs={12} md={4}>
         <Stack spacing={3}>
-          <SpaceMainCard data={data} tokensCollected={tokensCollected}/>
+          <SpaceMainCard2 data={data} tokensCollected={tokensCollected}/>
           <SpaceMemberInfo data={data} tokensCollected={tokensCollected} />
           <SpaceAbout data={data} />
         </Stack>

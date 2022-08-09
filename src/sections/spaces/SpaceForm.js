@@ -1,10 +1,28 @@
-
+import * as React from 'react';
 import { useState } from 'react';
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../Pinata";
 import ABIS from '../../abis/abis.json';
 
 
+// mui
 import { Card, Grid, Stack, Typography, TextField, Avatar, Button } from '@mui/material';
+
+//mui alert
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+//---------------------------------------------------------
+
+//Dialog
+
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+//-------------------------------------------------
 
 
 import Iconify from '../../components/Iconify';
@@ -14,13 +32,41 @@ import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
+//global variables
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
 
 export default function SpaceForm() {
+
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
 
   const [formParams, updateFormParams] = useState({ spacename: '', spacedescription: '', price: '', supplypass: ''});
   const [fileURL, setFileURL] = useState(null);
   const ethers = require("ethers");
-  const [, updateMessage] = useState('');
+
+ 
+  const [message1, setMessage1] = useState('Uploading image...');
+  const [message2, setMessage2] = useState('Uploading metadata...');
+  const [message3, setMessage3] = useState('Pushing to blockchain...');
+
+  const [alertMessage, setAlertMessage] = useState('');
   const [imgPre, setImgPre] = useState(null);
   
   async function onChangeFile (e) {
@@ -32,11 +78,11 @@ export default function SpaceForm() {
     try {
         const response = await uploadFileToIPFS(files);
         if(response.success === true) {
-            console.log("Image uploaded to IPFS", response.pinataURL);
+            setMessage1('Image uploaded successfully!');
             setFileURL(response.pinataURL);
         }
     } catch (e) {
-        console.log(e);
+        setAlertMessage('Error uploading image to IPFS!');
     }
 }
 
@@ -55,12 +101,12 @@ export default function SpaceForm() {
 
         const response = await uploadJSONToIPFS(nftJSON);
         if(response.success === true) {
-            console.log("Metadata uploaded to IPFS", response.pinataURL);
+            setMessage2('Metadata uploaded successfully!');
             return response.pinataURL;
         }
 
     } catch (e) {
-        console.log("Error uploading metadata", e);
+        setAlertMessage('Error uploading metadata!');
     }
 
   }
@@ -69,35 +115,111 @@ export default function SpaceForm() {
     e.preventDefault();
 
     try {
+
+        setOpen2(true);
+
         const metadataURL = await uploadMetadataToIPFS();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
 
-        updateMessage('Uploading NFT to Ethereum...');
 
         let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer);
 
         const priced = ethers.utils.parseEther(formParams.price, 'ether');
         const privateAddress = [];
 
-        let minting = await contract.mint(metadataURL, (1).toString(), formParams.supplypass.toString(), priced, privateAddress);
+        const uniqueId = (length=16) => {
+          return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))
+        }
+
+        let minting = await contract.mint(metadataURL, uniqueId().toString(), formParams.supplypass.toString(), priced, privateAddress);
         await minting.wait();
 
-        updateMessage('Space created successfully!');
-        updateMessage('');
+        setMessage3('Space created successfully!');
+
+
+        setOpen2(false);
+        setMessage1('');
+        setMessage2('');
+        setMessage3('');
+       
         updateFormParams({ spacename: '', spacedescription: '', price: '', supplypass: ''});
         setImgPre(null);
         setFileURL(null);
         
 
     } catch (e) {
-        console.log(e);
+
+        setOpen2(false);
+        setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
+        setOpen(true);
+        
+        
     }
   }
+
+
+ 
 
   
 
   return (
+    <>
+
+
+    <Stack spacing={2} sx={{ width: '100%' }}>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+    </Snackbar>
+  </Stack>
+
+
+      <Dialog
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Uploading (Do not close)"}
+        </DialogTitle>
+        <DialogContent sx={{mt:3}}>
+          <DialogContentText id="alert-dialog-description">
+          <List>
+          <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor:'#00ac56', color: 'white' }}>
+               1
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText style={{color: 'white'}}>{message1}</ListItemText>
+        </ListItem>
+
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor:'#00ac56', color: 'white' }}>
+               2
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText style={{color: 'white'}}>{message2}</ListItemText>
+        </ListItem>
+
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor:'#00ac56', color: 'white' }}>
+               3
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText style={{color: 'white'}}>{message3}</ListItemText>
+        </ListItem>
+        </List>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+
+
     <form onSubmit={listToken}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
@@ -131,8 +253,8 @@ export default function SpaceForm() {
                     </div>
 
             <Typography variant="body2" sx={{ color: 'text.secondary', mt: 3 }}>
-                    Make sure not to upload anything that you do not own.
-                  </Typography>
+              This image will act as a <span style={{color: '#00ac56'}}>Memberpass NFT</span> for the community.
+              </Typography>
           </Card>
         </Grid>
 
@@ -171,5 +293,6 @@ export default function SpaceForm() {
         </Grid>
       </Grid>
     </form>
+    </>
   );
 }

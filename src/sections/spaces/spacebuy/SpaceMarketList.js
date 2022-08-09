@@ -31,6 +31,7 @@ import Scrollbar from '../../../components/Scrollbar';
 import ListMemberpass from '../ListMemberpass';
 import DeListing from '../DeListing';
 import ListingBuy from '../ListingBuy';
+import { SkeletonPostItem2 } from '../../../components/skeleton';
 
 
 // ----------------------------------------------------------------------
@@ -38,9 +39,8 @@ import ListingBuy from '../ListingBuy';
 
 
 export default function SpaceMarketList({data, tokenamount}) {
- 
 
-  
+
 
   const { themeStretch } = useSettings();
 
@@ -98,18 +98,24 @@ export default function SpaceMarketList({data, tokenamount}) {
         return item;
     }))
 
+
+    const customers = items.reduce((dict, data) => {
+      if (!dict[data.tokenId]) dict[data.tokenId] = [];
+      dict[data.tokenId].push(data);
+      return dict;
+    }, {});
+
+    const listedItemsbyId = customers[data.tokenId];
+
    
     updateFetched(true);
-    updateListingData(items);
+    updateListingData(listedItemsbyId);
 }
 
 
 
 if(!dataFetched)
     getAllNFTs();
-
-    console.log(listingdata)
-
 
 
   return (
@@ -120,7 +126,11 @@ if(!dataFetched)
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4" gutterBottom>
-            Listed for sell
+            Listed memberpass
+          </Typography>
+
+          <Typography variant="subtitle" gutterBottom sx={{mt: 4, color: 'gray'}}>
+            (Buy memberpass directly from the community market)
           </Typography>
           
         </Box>
@@ -139,7 +149,7 @@ if(!dataFetched)
 
      
 
-        
+        {listingdata === null ? <SkeletonPostItem2/> :
 
         <Card>
          
@@ -169,7 +179,8 @@ if(!dataFetched)
                          Price
                         </TableCell>
 
-                        <TableCell>
+                        <TableCell align="left">
+                          Actions
                         </TableCell>
 
      
@@ -217,6 +228,7 @@ if(!dataFetched)
 
         
         </Card>
+        }
       </Container>
     </Page>
   );

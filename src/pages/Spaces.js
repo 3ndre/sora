@@ -32,8 +32,7 @@ export default function Spaces() {
     let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer)
     //create an NFT Token
     let transaction = await contract.viewAllListings()
-    
-  console.log(transaction)
+   
 
 
    
@@ -64,14 +63,15 @@ export default function Spaces() {
             spacedescription: meta.spacedescription,
         }
 
-    
+       
         return item;
     }))
 
-
-    const key = items.tokenId;
-
+    
+    const key = 'tokenId';
     const arrayUniqueByKey = [...new Map(items.map(item => [item[key], item])).values()];
+    
+    
    
     updateFetched(true);
     updateData(arrayUniqueByKey);

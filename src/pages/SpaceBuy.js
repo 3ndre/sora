@@ -1,22 +1,19 @@
-import { capitalCase } from 'change-case';
 import { useAccount } from 'wagmi'
 import { useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import ABIS from '../abis/abis.json';
 import axios from "axios";
 // @mui
-import { styled } from '@mui/material/styles';
-import { Tab, Box, Card, Tabs, Container, Typography } from '@mui/material';
+
+import { Tab, Box, Container, Typography } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 // hooks
-import useAuth from '../hooks/useAuth';
-import useTabs from '../hooks/useTabs';
+
 import useSettings from '../hooks/useSettings';
-// _mock_
-import { _userFriends, _userGallery, _userFollowers } from '../_mock';
+
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';
@@ -26,34 +23,18 @@ import Iconify from '../components/Iconify';
 
 import {
     SpaceBuyProfile,
-    SpaceMembers,
   SpaceHolder,
   SpaceMarketList,
 } from '../sections/spaces/spacebuy';
 
 import { SpaceProfile } from '../sections/spaces/spaceprofile';
-import { SkeletonPostItem } from '../components/skeleton';
+import { SkeletonProductItem } from '../components/skeleton';
 
 
 
 
 // ----------------------------------------------------------------------
 
-const TabsWrapperStyle = styled('div')(({ theme }) => ({
-  zIndex: 9,
-  bottom: 0,
-  width: '100%',
-  display: 'flex',
-  position: 'absolute',
-  backgroundColor: theme.palette.background.paper,
-  [theme.breakpoints.up('sm')]: {
-    justifyContent: 'center',
-  },
-  [theme.breakpoints.up('md')]: {
-    justifyContent: 'flex-end',
-    paddingRight: theme.spacing(3),
-  },
-}));
 
 // ----------------------------------------------------------------------
 
@@ -64,15 +45,15 @@ export default function SpaceBuy() {
 
   const tokenId = useParams().id;
 
-  const { user } = useAuth();
+
 
   const [data, updateData] = useState('');
   
 
-  const [dataFetched, updateDataFetched] = useState(false);
+  const [, updateDataFetched] = useState(false);
   
-  const [currAddress, updateCurrAddress] = useState("0x");
-  const [listingId, setListingId] = useState("");
+  const [, updateCurrAddress] = useState("0x");
+  const [, setListingId] = useState("");
   const [buyer, setBuyer] = useState(null); //all the buyers
   const [tokenamount, setTokenamount] = useState(null); //token amount owned by user
 
@@ -161,7 +142,7 @@ useEffect(() => {
       <Container maxWidth={themeStretch ? false : 'lg'}>
 
 
-        {data === '' ? <SkeletonPostItem/> :
+        {data === '' ? <SkeletonProductItem/> :
 
         <>
 
@@ -179,17 +160,8 @@ useEffect(() => {
         ) : null}
           
         </Box>
-
-        
-     
-
-        </Box>
-
-
-               
+        </Box>     
        
-         
-
 
             <TabContext value={value}>
             

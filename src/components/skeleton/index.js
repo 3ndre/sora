@@ -3,6 +3,7 @@ export { default as SkeletonPost } from './SkeletonPost';
 export { default as SkeletonProduct } from './SkeletonProduct';
 export { default as SkeletonSpaceCard } from './SkeletonSpaceCard';
 export { default as SkeletonPostItem } from './SkeletonPostItem';
+export { default as SkeletonPostItem2 } from './SkeletonPostItem2';
 export { default as SkeletonProductItem } from './SkeletonProductItem';
 export { default as SkeletonKanbanColumn } from './SkeletonKanbanColumn';
 export { default as SkeletonMailSidebarItem } from './SkeletonMailSidebarItem';

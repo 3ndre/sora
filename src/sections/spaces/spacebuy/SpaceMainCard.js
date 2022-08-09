@@ -12,6 +12,9 @@ import SvgIconStyle from '../../../components/SvgIconStyle';
 
 export default function SpaceMainCard({data, tokensCollected}) {
 
+
+  const totalSupply = parseInt(data.supplypass);
+
   const [message, updateMessage] = useState("");
 
 
@@ -82,10 +85,21 @@ export default function SpaceMainCard({data, tokensCollected}) {
         {data.spacedescription}
       </Typography>
 
-        {tokensCollected > 0 ? null : 
+        {tokensCollected === totalSupply ? 
+        <><Button variant="contained" disabled sx={{mb: 1}}>
+           Sold out
+          </Button>
+          <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
+            (Check the market for available memberpass)
+          </Typography>
+          </>
+
+        : 
+        <>
         <Button variant="contained" sx={{mb: 3}} onClick={() => buyPass(data.tokenId)}>
                 Buy memberpass
-        </Button>}
+        </Button>
+        </>}
 
 
       <div>{message}</div>
