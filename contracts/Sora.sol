@@ -97,7 +97,6 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
 
         require(amount > 0, "Amount must be greater than 0!");
         require(token.balanceOf(msg.sender, tokenId) >= amount, "Caller must own given token!");
-        require(token.balanceOf(msg.sender, tokenId) == amount, "Amount listed should be total amount");
         require(token.isApprovedForAll(msg.sender, address(this)), "Contract must be approved!");
 
         bool privateListing = privateBuyer.length>0;

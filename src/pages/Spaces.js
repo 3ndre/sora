@@ -33,6 +33,7 @@ export default function Spaces() {
     //create an NFT Token
     let transaction = await contract.viewAllListings()
     
+  console.log(transaction)
 
 
    
@@ -40,7 +41,8 @@ export default function Spaces() {
 
     //Fetch all the details of every NFT from the contract and display
     const items = await Promise.all(transaction.map(async i => {
-        
+
+      
         const tokenURI = await contract.uri(i.tokenId);
         
         let meta = await axios.get(tokenURI);
@@ -61,12 +63,18 @@ export default function Spaces() {
             spacename: meta.spacename,
             spacedescription: meta.spacedescription,
         }
+
+    
         return item;
     }))
 
+
+    const key = items.tokenId;
+
+    const arrayUniqueByKey = [...new Map(items.map(item => [item[key], item])).values()];
    
     updateFetched(true);
-    updateData(items);
+    updateData(arrayUniqueByKey);
 }
 
 

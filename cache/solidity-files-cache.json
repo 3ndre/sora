@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\contracts\\Sora.sol": {
-      "lastModificationDate": 1659933003893,
-      "contentHash": "a3ff7558b2f3466e39fa0f8263a5dfcc",
+      "lastModificationDate": 1660044780318,
+      "contentHash": "8ea6a18da1565986aea4564299803578",
       "sourceName": "contracts/Sora.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -44,7 +44,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\hardhat\\console.sol": {
-      "lastModificationDate": 1659932177964,
+      "lastModificationDate": 1659938791504,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
@@ -79,7 +79,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\token\\ERC1155\\ERC1155.sol": {
-      "lastModificationDate": 1659932948155,
+      "lastModificationDate": 1659938760092,
       "contentHash": "9be05ac5a08ad0370e3cc36665ca490c",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
       "solcConfig": {
@@ -121,7 +121,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
-      "lastModificationDate": 1659932952520,
+      "lastModificationDate": 1659938771588,
       "contentHash": "e436cea06129be2c73cda4b1acc848b5",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -158,7 +158,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\security\\ReentrancyGuard.sol": {
-      "lastModificationDate": 1659932952532,
+      "lastModificationDate": 1659938772654,
       "contentHash": "92f9448b23a90ea3bb932ee55cc3ccce",
       "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
       "solcConfig": {
@@ -193,7 +193,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\token\\ERC1155\\extensions\\ERC1155Supply.sol": {
-      "lastModificationDate": 1659932948687,
+      "lastModificationDate": 1659938760924,
       "contentHash": "6a99607f60a77d468b7ed41303ea4a6c",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
       "solcConfig": {
@@ -230,7 +230,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\utils\\Counters.sol": {
-      "lastModificationDate": 1659932946290,
+      "lastModificationDate": 1659938757285,
       "contentHash": "74654e3ae5d7f39555055dfe244dab7a",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
@@ -265,7 +265,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\token\\ERC1155\\IERC1155.sol": {
-      "lastModificationDate": 1659932950777,
+      "lastModificationDate": 1659938767055,
       "contentHash": "d5a8f6e07ca38ec384856cfe9f08a867",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
       "solcConfig": {
@@ -302,7 +302,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\token\\ERC1155\\IERC1155Receiver.sol": {
-      "lastModificationDate": 1659932950824,
+      "lastModificationDate": 1659938767244,
       "contentHash": "9f8822b72fe2702979e40160cb6d9636",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
       "solcConfig": {
@@ -339,7 +339,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\token\\ERC1155\\extensions\\IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1659932950796,
+      "lastModificationDate": 1659938767134,
       "contentHash": "9148c2e10c4efb12c71a7f080da5559b",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
       "solcConfig": {
@@ -376,7 +376,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\utils\\Address.sol": {
-      "lastModificationDate": 1659932946173,
+      "lastModificationDate": 1659938756172,
       "contentHash": "c476b3895a94798b88a4bb97399e6dfe",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
@@ -411,7 +411,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1659932946262,
+      "lastModificationDate": 1659938757207,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -446,7 +446,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\ERC165.sol": {
-      "lastModificationDate": 1659932948958,
+      "lastModificationDate": 1659938761143,
       "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
@@ -483,7 +483,7 @@
       ]
     },
     "C:\\Users\\suvek\\Desktop\\sorapalace\\sorapalace\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\IERC165.sol": {
-      "lastModificationDate": 1659932951065,
+      "lastModificationDate": 1659938767510,
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {

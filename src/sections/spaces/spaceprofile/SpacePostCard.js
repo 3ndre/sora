@@ -29,34 +29,30 @@ SpacePostCard.propTypes = {
   post: PropTypes.object,
 };
 
-export default function SpacePostCard({ post }) {
+export default function SpacePostCard() {
  
 
-  const commentInputRef = useRef(null);
 
 
-  const [isLiked, setLiked] = useState(post.isLiked);
+  const [isLiked, setLiked] = useState(null);
 
-  const [likes, setLikes] = useState(post.personLikes.length);
+  const [likes, setLikes] = useState(0);
 
 
   
 
   const handleLike = () => {
     setLiked(true);
-    setLikes((prevLikes) => prevLikes + 1);
+    setLikes(1);
   };
 
   const handleUnlike = () => {
     setLiked(false);
-    setLikes((prevLikes) => prevLikes - 1);
+    setLikes(0);
   };
 
 
 
-  const handleClickComment = () => {
-    commentInputRef.current?.focus();
-  };
 
   return (
     <Card>
@@ -71,7 +67,7 @@ export default function SpacePostCard({ post }) {
         }
         subheader={
           <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary' }}>
-            {fDate(post.createdAt)}
+            19th july
           </Typography>
         }
         action={
@@ -83,7 +79,7 @@ export default function SpacePostCard({ post }) {
 
       <Stack spacing={1} sx={{ p: 2 }}>
 
-        <Typography sx={{ p: 1 }}>{post.message}</Typography>
+        <Typography sx={{ p: 1 }}>Welcome to the community</Typography>
 
         <Stack direction="row" alignItems="center">
           <FormControlLabel
@@ -97,12 +93,12 @@ export default function SpacePostCard({ post }) {
                 onChange={isLiked ? handleUnlike : handleLike}
               />
             }
-            label={fShortenNumber(likes)}
+            label={fShortenNumber(10)}
             sx={{ minWidth: 72, mr: 0 }}
           />
          
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton onClick={handleClickComment}>
+          <IconButton >
             <Iconify icon={'eva:message-square-fill'} width={20} height={20} />
           </IconButton>
         </Stack>

@@ -10,7 +10,7 @@ import SvgIconStyle from '../../../components/SvgIconStyle';
 // ----------------------------------------------------------------------
 
 
-export default function SpaceMainCard({data}) {
+export default function SpaceMainCard({data, tokensCollected}) {
 
   const [message, updateMessage] = useState("");
 
@@ -82,9 +82,10 @@ export default function SpaceMainCard({data}) {
         {data.spacedescription}
       </Typography>
 
-      <Button variant="contained" sx={{mb: 3}} onClick={() => buyPass(data.tokenId)}>
-        Buy memberpass
-      </Button>
+        {tokensCollected > 0 ? null : 
+        <Button variant="contained" sx={{mb: 3}} onClick={() => buyPass(data.tokenId)}>
+                Buy memberpass
+        </Button>}
 
 
       <div>{message}</div>

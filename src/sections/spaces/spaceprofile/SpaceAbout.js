@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-// @mui
+
 import { styled } from '@mui/material/styles';
 import { Link, Card, Typography, CardHeader, Stack } from '@mui/material';
 // components
@@ -17,41 +16,38 @@ const IconStyle = styled(Iconify)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-SpaceAbout.propTypes = {
-  profile: PropTypes.object,
-};
 
-export default function SpaceAbout({ profile }) {
-  const { quote, country, email, role, company, school } = profile;
+export default function SpaceAbout() {
+  
 
   return (
     <Card>
       <CardHeader title="About" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">{quote}</Typography>
+        <Typography variant="body2">This is description</Typography>
 
         <Stack direction="row">
           <IconStyle icon={'eva:pin-fill'} />
           <Typography variant="body2">
             Live at &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {country}
+              This is cosun
             </Link>
           </Typography>
         </Stack>
 
         <Stack direction="row">
           <IconStyle icon={'eva:email-fill'} />
-          <Typography variant="body2">{email}</Typography>
+          <Typography variant="body2">Email</Typography>
         </Stack>
 
         <Stack direction="row">
           <IconStyle icon={'ic:round-business-center'} />
           <Typography variant="body2">
-            {role} at &nbsp;
+            Role at &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {company}
+              Company
             </Link>
           </Typography>
         </Stack>
@@ -61,7 +57,7 @@ export default function SpaceAbout({ profile }) {
           <Typography variant="body2">
             Studied at &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {school}
+              school
             </Link>
           </Typography>
         </Stack>

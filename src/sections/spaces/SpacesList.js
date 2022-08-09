@@ -45,7 +45,7 @@ export default function SpaceList({data}) {
           </> : 
           <>
           {data.map((space) => (
-            <SpaceCard key={space.tokenId} space={space} />
+            <SpaceCard key={space.listingId} space={space} />
           ))}
           </>
         }

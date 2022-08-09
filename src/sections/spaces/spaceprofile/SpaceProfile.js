@@ -5,8 +5,8 @@ import { Grid, Stack } from '@mui/material';
 import SpaceAbout from './SpaceAbout';
 import SpacePostCard from './SpacePostCard';
 import SpacePostInput from './SpacePostInput';
-import SpaceMemberInfo from './SpaceMemberInfo';
-import SpaceMainCard from './SpaceMainCard';
+import SpaceMemberInfo from '../spacebuy/SpaceMemberInfo';
+import SpaceMainCard from '../spacebuy/SpaceMainCard';
 import useResponsive from '../../../hooks/useResponsive';
 
 // ----------------------------------------------------------------------
@@ -16,7 +16,7 @@ SpaceProfile.propTypes = {
   posts: PropTypes.array,
 };
 
-export default function SpaceProfile({ myProfile, posts }) {
+export default function SpaceProfile({ data, tokensCollected }) {
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -28,9 +28,9 @@ export default function SpaceProfile({ myProfile, posts }) {
       <Grid item xs={12} md={8}>
         <Stack spacing={2}>
           <SpacePostInput />
-          {posts.map((post) => (
-            <SpacePostCard key={post.id} post={post} />
-          ))}
+          
+            <SpacePostCard  /> 
+       
         </Stack>
       </Grid>
 
@@ -38,9 +38,9 @@ export default function SpaceProfile({ myProfile, posts }) {
       {isDesktop && 
       <Grid item xs={12} md={4}>
         <Stack spacing={3}>
-          <SpaceMainCard/>
-          <SpaceMemberInfo profile={myProfile} />
-          <SpaceAbout profile={myProfile} />
+          <SpaceMainCard data={data} tokensCollected={tokensCollected}/>
+          <SpaceMemberInfo data={data} tokensCollected={tokensCollected} />
+          <SpaceAbout data={data} />
         </Stack>
       </Grid>
       }

@@ -19,8 +19,8 @@ module.exports = {
       chainId: 1337
     },
     matic: {
-      url: process.env.MATIC_MUMBAI_URL, 
-      accounts: process.env.PRIVATE_KEY,
+      url: 'https://polygon-mumbai.g.alchemy.com/v2/ENZXGT0Qxaq7fqJLJcYoJRThBUY3yZnY', 
+      accounts: [""],
     }
   },
   solidity: {
