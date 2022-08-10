@@ -66,7 +66,7 @@ export default function SpaceMarketList({data, tokenamount}) {
     let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer)
     //create an NFT Token
     let transaction = await contract.viewAllListings()
-    
+  
    
 
     //Fetch all the details of every NFT from the contract and display
@@ -97,7 +97,6 @@ export default function SpaceMarketList({data, tokenamount}) {
         }
         return item;
     }))
-
 
     const customers = items.reduce((dict, data) => {
       if (!dict[data.tokenId]) dict[data.tokenId] = [];
@@ -207,7 +206,7 @@ if(!dataFetched)
 
                               <TableCell align="left">{item.price} Matic</TableCell>
 
-                              <TableCell align="right">
+                              <TableCell align="left">
 
                         {address === item.seller ? 
                             <DeListing listingId={item.listingId} completed={item.completed}/>

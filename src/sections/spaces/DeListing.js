@@ -4,18 +4,25 @@ import ABIS from '../../abis/abis.json';
 
 //---------------Mui Dialog -----------------
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 
 
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import {Grid,Typography} from "@mui/material";
-import TextField from '@mui/material/TextField';
+//mui alert
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+import {Stack} from "@mui/material";
+
 //-------------------------------------------
 
 import Iconify from '../../components/Iconify';
 
+
+
+//global variables
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 
@@ -23,9 +30,18 @@ import Iconify from '../../components/Iconify';
 const DeListing = ({listingId, completed}) => {
 
 
-   
+    const [open, setOpen] = useState(false);
     const ethers = require("ethers");
-    const [message, updateMessage] = useState('');
+    const [message, setMessage] = useState('');
+    const [alertMessage, setAlertMessage] = useState('');
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
 
 
     async function delistToken(e) {
@@ -44,12 +60,14 @@ const DeListing = ({listingId, completed}) => {
 
         
   
-          updateMessage('Delisted successfully!');
-          updateMessage('');
+          setMessage('Delisted successfully!');
+          setOpen(true);
+         
           
   
       } catch (e) {
-          console.log(e);
+        setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
+        setOpen(true);
       }
     }
 
@@ -61,9 +79,24 @@ const DeListing = ({listingId, completed}) => {
   return (
     <>
 
+<Stack spacing={2} sx={{ width: '100%' }}>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      {alertMessage ?
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+        : 
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        {message}
+      </Alert>
+        }
+    
+    </Snackbar>
+  </Stack>
+
 {completed === true ? 
-      <Button variant="contained" color="error" disabled startIcon={<Iconify icon="gg:remove" />}>
-              Delisted
+      <Button variant="contained" color="error" disabled startIcon={<Iconify icon="carbon:not-available" />}>
+              Not available
     </Button>
 
     : 

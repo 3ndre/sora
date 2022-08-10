@@ -24,6 +24,7 @@ import {
   ProfileGallery,
   ProfileFollowers,
 } from '../sections/user/profile';
+import SwitchNetwork from './SwitchNetwork';
 
 // ----------------------------------------------------------------------
 
@@ -94,6 +95,8 @@ export default function UserProfile() {
   return (
     <Page title="Profile">
       <Container maxWidth={themeStretch ? false : 'lg'}>
+
+        <SwitchNetwork/>
        
         <Card
           sx={{

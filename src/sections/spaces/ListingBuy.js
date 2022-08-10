@@ -136,8 +136,8 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
 
     
       {completed === true ? 
-      <Button variant="contained" startIcon={<Iconify icon="teenyicons:tick-circle-solid" />} disabled>
-              Bought
+      <Button variant="contained" startIcon={<Iconify icon="carbon:not-available" />} disabled>
+              Not available
             </Button>
             : 
 

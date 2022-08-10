@@ -64,7 +64,7 @@ export default function SpaceForm() {
  
   const [message1, setMessage1] = useState('Uploading image...');
   const [message2, setMessage2] = useState('Uploading metadata...');
-  const [message3, setMessage3] = useState('Pushing to blockchain...');
+  const [message3, setMessage3] = useState('Confirming transaction...');
 
   const [alertMessage, setAlertMessage] = useState('');
   const [imgPre, setImgPre] = useState(null);
@@ -95,6 +95,7 @@ export default function SpaceForm() {
     const nftJSON = {
         spacename, spacedescription, price, supplypass, image: fileURL
     }
+    
 
 
     try {
@@ -151,6 +152,13 @@ export default function SpaceForm() {
     } catch (e) {
 
         setOpen2(false);
+        setMessage1('');
+        setMessage2('');
+        setMessage3('');
+       
+        updateFormParams({ spacename: '', spacedescription: '', price: '', supplypass: ''});
+        setImgPre(null);
+        setFileURL(null);
         setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
         setOpen(true);
         

@@ -10,13 +10,25 @@ import DialogActions from "@mui/material/DialogActions";
 
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import {Grid,Typography} from "@mui/material";
+import {Grid,Typography, Stack} from "@mui/material";
 import TextField from '@mui/material/TextField';
 //-------------------------------------------
+
+//mui alert
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+//---------------------------------------------------------
 
 import Iconify from '../../components/Iconify';
 
 
+
+//global variables
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 
@@ -24,16 +36,21 @@ const ListMemberpass = ({data, tokenamount}) => {
 
 
     const [open, setOpen] = useState(false);
+    const [open2, setOpen2] = useState(false); //alert
+    const [listingLoad, setListingLoad] = useState(false); //listing loading
 
     const [formParams, updateFormParams] = useState({ amount: '', price: ''});
     const ethers = require("ethers");
-    const [message, updateMessage] = useState('');
+    const [message, setMessage] = useState('');
+    const [alertMessage, setAlertMessage] = useState('');
 
 
     async function listToken(e) {
       e.preventDefault();
   
       try {
+
+          setListingLoad(true);
        
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
@@ -48,14 +65,18 @@ const ListMemberpass = ({data, tokenamount}) => {
 
         
   
-          updateMessage('Memberpass listed successfully!');
-          updateMessage('');
+          setMessage('Memberpass listed successfully!');
+          setListingLoad(false);
           updateFormParams({ price: '', amount: ''});
           setOpen(false);
-          
+          setOpen2(true);
   
       } catch (e) {
-          console.log(e);
+        setOpen(false);
+        setListingLoad(false);
+        updateFormParams({ price: '', amount: ''});
+        setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
+        setOpen2(true);
       }
     }
 
@@ -72,12 +93,41 @@ const ListMemberpass = ({data, tokenamount}) => {
     setOpen(false);
   };
 
+  const handleClose2 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen2(false);
+  };
+
 
 
 
 
   return (
     <>
+
+
+
+<Stack spacing={2} sx={{ width: '100%' }}>
+    <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+
+        {alertMessage ?
+        <Alert onClose={handleClose2} severity="error" sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+        : 
+        <Alert onClose={handleClose2} severity="success" sx={{ width: '100%' }}>
+        {message}
+      </Alert>
+        }
+    
+    </Snackbar>
+  </Stack>
+
+
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -91,7 +141,7 @@ const ListMemberpass = ({data, tokenamount}) => {
 
         <DialogContent>
 
-        <Typography variant="subtitle" sx={{color: 'gray'}}>{message}</Typography>
+       
 
           <Typography variant="subtitle" sx={{color: 'gray'}}>(You have <span style={{color: '#00ac56'}}>{tokenamount} memberpass</span>)</Typography>
 
@@ -128,11 +178,21 @@ const ListMemberpass = ({data, tokenamount}) => {
         </DialogContent>
         <DialogActions>
 
+          {listingLoad === true ? 
+
+           <Button type="submit" disabled autoFocus>
+             Listing...
+          </Button>
+          
+          :
+          <>
           <Button onClick={handleClose} style={{color: 'white'}}>Cancel</Button>
 
           <Button type="submit" form="listing-form-id"  autoFocus>
            List
           </Button>
+          </>
+          }
 
 
 

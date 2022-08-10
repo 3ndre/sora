@@ -7,6 +7,7 @@ import useSettings from '../hooks/useSettings';
 // components
 import Page from '../components/Page';
 import SpaceForm from '../sections/spaces/SpaceForm';
+import SwitchNetwork from './SwitchNetwork';
 
 
 // ----------------------------------------------------------------------
@@ -23,6 +24,8 @@ export default function CreateSpace() {
   return (
     <Page title="Create space">
       <Container maxWidth={themeStretch ? false : 'xl'}>
+
+        <SwitchNetwork />
 
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Box sx={{ flexGrow: 1 }}>

@@ -29,6 +29,7 @@ import {
 
 import { SpaceProfile } from '../sections/spaces/spaceprofile';
 import { SkeletonProductItem } from '../components/skeleton';
+import SwitchNetwork from './SwitchNetwork';
 
 
 
@@ -41,7 +42,10 @@ import { SkeletonProductItem } from '../components/skeleton';
 export default function SpaceBuy() {
   const { themeStretch } = useSettings();
 
-  const { isConnected, address } = useAccount()
+  const { isConnected, address } = useAccount();
+  const [previousAccount, ] = useState(address);
+
+
 
   const tokenId = useParams().id;
 
@@ -79,11 +83,53 @@ export default function SpaceBuy() {
    
     //Pull the deployed contract instance
     let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer)
+
+
+    //Fetch all the details of every NFT through the listing ID
+    let transactionbyId = await contract.viewAllListings()
+
+    const items = await Promise.all(transactionbyId.map(async i => {
+
+      
+      const tokenURI = await contract.uri(i.tokenId);
+      
+      let meta = await axios.get(tokenURI);
+      meta = meta.data;
+     
+     
+
+      let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
+     
+      let item = {
+          price,
+          tokenId: i.tokenId.toNumber(),
+          seller: i.seller,
+          contractAddress: i.contractAddress,
+          listingId: i.listingId.toNumber(),
+          supply: i.tokensAvailable.toNumber(),
+          image: meta.image,
+          spacename: meta.spacename,
+          spacedescription: meta.spacedescription,
+      }
+
+     
+      return item;
+  }))
+
+  
+  const key = 'tokenId';
+  const arrayUniqueByKey = [...new Map(items.map(item => [item[key], item])).values()];
+
+
+  const uniquelistingID = arrayUniqueByKey.find(x => x.tokenId === parseInt(tokenId)).listingId;
+
+  //-----------------------------------------------------------------------------------------------
+
     //create an NFT Token
     const tokenURI = await contract.uri(tokenId);
-    const listedToken = await contract.viewListingById(tokenId);
+    const listedToken = await contract.viewListingById(uniquelistingID);
 
- 
+    
     let meta = await axios.get(tokenURI);
     meta = meta.data;
 
@@ -122,8 +168,10 @@ export default function SpaceBuy() {
 
 useEffect(() => {
   getNFTData(tokenId);
-}, [])
-
+  if(address !== previousAccount){
+    getNFTData(tokenId);
+}
+}, [address])
 
 
   
@@ -132,14 +180,13 @@ useEffect(() => {
     return <Navigate to="/connect" />;
   }
 
-  
-        
-
 
   return (
     <Page title="Space">
       
       <Container maxWidth={themeStretch ? false : 'lg'}>
+
+        <SwitchNetwork/>
 
 
         {data === '' ? <SkeletonProductItem/> :
