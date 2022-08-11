@@ -13,6 +13,8 @@ import HomeTrending from '../sections/general/HomeTrending';
 export default function Home() {
   const { themeStretch } = useSettings();
 
+  
+
   return (
     <Page title="Home">
       <Container maxWidth={themeStretch ? false : 'xl'}>

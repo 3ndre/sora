@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'react';
+import { useState, useEffect} from 'react';
+import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import {
@@ -29,14 +30,43 @@ SpacePostCard.propTypes = {
   post: PropTypes.object,
 };
 
-export default function SpacePostCard() {
+export default function SpacePostCard({tokenId}) {
  
-
-
 
   const [isLiked, setLiked] = useState(null);
 
   const [likes, setLikes] = useState(0);
+
+
+  
+  const [spacepost, setSpacePost] = useState(null);
+  const [dataFetched, updateFetched] = useState(false);
+
+
+  
+  async function getAllSpaces() {
+
+    const userSignature = JSON.parse(localStorage.getItem('signature'))
+   
+    let meta = await axios.get('http://localhost:5000/api/spaces');
+
+   const space_id = meta.data.find(x => x.tokenId === parseInt(tokenId))._id; //space id from backend
+
+   let axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+        "x-auth-token": userSignature.toString(),
+    }
+  };
+
+   let meta2 = await axios.get(`http://localhost:5000/api/spaces/${space_id}`, axiosConfig);
+
+
+    updateFetched(true);
+    setSpacePost(meta2.data.posts); //getting posts
+}
+
 
 
   
@@ -52,22 +82,34 @@ export default function SpacePostCard() {
   };
 
 
+  function updatedata() {
+    localStorage.setItem('dataupdated', 'false');
+  }
+
+  
+
+if(!dataFetched)
+getAllSpaces();
+
+
+
 
 
   return (
-    <Card>
+    <>
+     {spacepost && spacepost.length !== null ? spacepost.map(post => (
+    <Card key={post._id}>
       <CardHeader
         disableTypography
         avatar={<MyAvatar />}
         title={
           <Link to="#" variant="subtitle2" color="text.primary" component={RouterLink} style={{textDecoration: 'none'}}>
-            Doraemon
-         
+            {post.wallet}
           </Link>
         }
         subheader={
           <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary' }}>
-            19th july
+            {fDate(post.date)}
           </Typography>
         }
         action={
@@ -79,7 +121,7 @@ export default function SpacePostCard() {
 
       <Stack spacing={1} sx={{ p: 2 }}>
 
-        <Typography sx={{ p: 1 }}>Welcome to the community</Typography>
+        <Typography sx={{ p: 1 }}>{post.text}</Typography>
 
         <Stack direction="row" alignItems="center">
           <FormControlLabel
@@ -93,17 +135,15 @@ export default function SpacePostCard() {
                 onChange={isLiked ? handleUnlike : handleLike}
               />
             }
-            label={fShortenNumber(10)}
+            label={fShortenNumber(1)}
             sx={{ minWidth: 72, mr: 0 }}
           />
          
-          <Box sx={{ flexGrow: 1 }} />
-          <IconButton >
-            <Iconify icon={'eva:message-square-fill'} width={20} height={20} />
-          </IconButton>
+         
         </Stack>
 
       </Stack>
-    </Card>
+    </Card>)) : null}
+    </> 
   );
 }

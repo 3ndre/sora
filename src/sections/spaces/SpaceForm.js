@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../Pinata";
 import ABIS from '../../abis/abis.json';
-
+import { useAccount } from 'wagmi'
+import axios from 'axios';
 
 // mui
 import { Card, Grid, Stack, Typography, TextField, Avatar, Button } from '@mui/material';
@@ -41,6 +42,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function SpaceForm() {
 
+  const { address } = useAccount()
+
+  const userSignature = JSON.parse(localStorage.getItem('signature'))
+
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
 
@@ -69,6 +74,8 @@ export default function SpaceForm() {
   const [alertMessage, setAlertMessage] = useState('');
   const [imgPre, setImgPre] = useState(null);
   
+  var IPFSImage;
+  
   async function onChangeFile (e) {
     var files = e.target.files[0];
 
@@ -95,6 +102,8 @@ export default function SpaceForm() {
     const nftJSON = {
         name, description, price, supplypass, image: fileURL
     }
+
+    IPFSImage = fileURL //this state will send data to backend
     
 
 
@@ -133,8 +142,46 @@ export default function SpaceForm() {
           return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))
         }
 
-        let minting = await contract.mint(metadataURL, uniqueId().toString(), formParams.supplypass.toString(), priced, privateAddress);
+        const id = uniqueId();
+
+        let minting = await contract.mint(metadataURL, id.toString(), formParams.supplypass.toString(), priced, privateAddress);
         await minting.wait();
+
+        
+        var postData = {
+          tokenId: id,
+          name: formParams.name,
+          description: formParams.description,
+          contractAddress: ABIS.address,
+          signature: userSignature,
+          category: 'Gaming',
+          supply: formParams.supplypass,
+          price: formParams.price,
+          image: IPFSImage,
+          creatorAddress: address,
+        };
+        
+        
+        let axiosConfig = {
+          headers: {
+              'Content-Type': 'application/json;charset=UTF-8',
+              "Access-Control-Allow-Origin": "*",
+              "x-auth-token": userSignature.toString(),
+          }
+        };
+        
+        
+        axios.post('http://localhost:5000/api/spaces', postData, axiosConfig)
+        .then((res) => {
+          console.log("Space created successfully!");
+        })
+        .catch((err) => {
+          console.log("Sign In unsuccessful");
+        })
+
+    
+
+
 
         setMessage3('Space created successfully!');
 
@@ -282,7 +329,7 @@ export default function SpaceForm() {
                 </Grid>
 
                 <Grid item xs={6} >
-                  <TextField placeholder="0.01 Eth" label="Pass price (in ETH)" type="number" variant="outlined" fullWidth required autoComplete='off' value={formParams.price} onChange={e => updateFormParams({...formParams, price: e.target.value})}/>
+                  <TextField placeholder="0.01 Matic" label="Pass price (in Matic)" type="number" variant="outlined" fullWidth required autoComplete='off' value={formParams.price} onChange={e => updateFormParams({...formParams, price: e.target.value})}/>
                 </Grid>
 
 

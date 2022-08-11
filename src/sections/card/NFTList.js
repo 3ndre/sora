@@ -50,7 +50,7 @@ export default function NFTList() {
        {nfts.map((nft) => {
               return (       
 
-                <NFTCard key={nft.id} nft={nft}/>
+                <NFTCard key={nft.tokenId} nft={nft}/>
              
            
             )}

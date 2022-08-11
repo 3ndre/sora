@@ -54,11 +54,11 @@ export default function SpaceCard({space}) {
       </Box>
 
       <Typography variant="subtitle1" sx={{ mt: 6 }}>
-        {space.spacename}
+        {space.name}
       </Typography>
 
       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-        {space.spacedescription}
+        {space.description}
       </Typography>
 
       <Stack sx={{py: 2}} alignItems="center">

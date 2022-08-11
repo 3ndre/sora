@@ -118,7 +118,7 @@ const ListMemberpass = ({data, tokenamount}) => {
           {alertMessage}
         </Alert>
         : 
-        <Alert onClose={handleClose2} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose2} severity="success" sx={{ width: '100%', color: 'white' }}>
         {message}
       </Alert>
         }
@@ -163,7 +163,7 @@ const ListMemberpass = ({data, tokenamount}) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <TextField type="number" name="price" sx={{ input: { color: 'black', background: 'white' } }} InputLabelProps={{ style: { color: 'black' } }} placeholder="0.05 Eth" label="Price" variant="filled" fullWidth required autoComplete='off' value={formParams.price} onChange={e => updateFormParams({...formParams, price: e.target.value})}/>
+                    <TextField type="number" name="price" sx={{ input: { color: 'black', background: 'white' } }} InputLabelProps={{ style: { color: 'black' } }} placeholder="0.05 Matic" label="Price" variant="filled" fullWidth required autoComplete='off' value={formParams.price} onChange={e => updateFormParams({...formParams, price: e.target.value})}/>
                 </Grid>
 
 

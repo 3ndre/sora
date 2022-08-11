@@ -18,6 +18,7 @@ SpaceProfile.propTypes = {
 
 export default function SpaceProfile({ data, tokensCollected }) {
 
+
   const isDesktop = useResponsive('up', 'lg');
 
 
@@ -27,9 +28,9 @@ export default function SpaceProfile({ data, tokensCollected }) {
      
       <Grid item xs={12} md={8}>
         <Stack spacing={2}>
-          <SpacePostInput />
+          <SpacePostInput tokenId={data.tokenId}/>
           
-            <SpacePostCard  /> 
+            <SpacePostCard tokenId={data.tokenId} /> 
        
         </Stack>
       </Grid>
