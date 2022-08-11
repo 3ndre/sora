@@ -133,11 +133,11 @@ export default function SpaceMainCard({data, tokensCollected}) {
       </Box>
 
       <Typography variant="subtitle1" sx={{ mt: 6 }}>
-        {data.spacename}
+        {data.name}
       </Typography>
 
       <Typography variant="body2" sx={{ color: 'text.secondary', mb: 4 }}>
-        {data.spacedescription}
+        {data.description}
       </Typography>
 
         {tokensCollected === totalSupply ? 

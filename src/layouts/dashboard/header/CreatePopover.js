@@ -8,6 +8,14 @@ import Iconify from '../../../components/Iconify';
 import { IconButtonAnimate } from '../../../components/animate';
 
 
+import { useNavigate } from 'react-router-dom';
+// --------------------------Sign Auth--------------------------------------------
+
+import axios from 'axios'
+import { useSignMessage } from 'wagmi'
+import { useAccount } from 'wagmi'
+// -----------------------------------------------------------------------------
+
 const RootStyle = styled('span')(({ theme }) => ({
   
   zIndex: theme.zIndex.drawer + 2,
@@ -16,16 +24,6 @@ const RootStyle = styled('span')(({ theme }) => ({
 }));
 
 
-// const DotStyle = styled('span')(({ theme }) => ({
-//   top: 8,
-//   width: 8,
-//   height: 8,
-//   right: 10,
-//   borderRadius: '50%',
-//   position: 'absolute',
-//   backgroundColor: theme.palette.error.main,
-// }));
-
 // ----------------------------------------------------------------------
 
 
@@ -33,11 +31,62 @@ const RootStyle = styled('span')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CreatePopover() {
+
+  const { address } = useAccount()
+
+  const navigate = useNavigate()
+  
+  const { data, isSuccess, signMessage } = useSignMessage({
+    message: `Welcome to Soraspace! Click to accept the terms and conditions! User: ${address}`,
+  })
+
+ 
+    var postData = {
+      wallet: address,
+      signature: data,
+    };
+    
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
+    
+    if(data && address !== null) {
+    axios.post('http://localhost:5000/api/users', postData, axiosConfig)
+    .then((res) => {
+      console.log("User Signed In: ", res);
+      localStorage.setItem('signature', JSON.stringify(data))
+      navigate('/create')
+    })
+    .catch((err) => {
+      console.log("Sign In unsuccessful");
+    })}
+
+
  
   return (
     <RootStyle>
       
       <Tooltip title="Create" placement="bottom">
+
+        {localStorage.getItem('signature') === null ? 
+      <IconButtonAnimate
+        color={'default'}
+        sx={{
+          mr: 1,
+          width: 40,
+          height: 40,
+          bgcolor: (theme) => alpha('#919EAB', theme.palette.action.focusOpacity),   
+          
+        }}
+        onClick={() => signMessage()}
+      >
+        <Iconify icon={'akar-icons:plus'} width={20} height={20} />
+      </IconButtonAnimate>
+
+      :
       <IconButtonAnimate
       to="/create"
         color={'default'}
@@ -52,6 +101,7 @@ export default function CreatePopover() {
       >
         <Iconify icon={'akar-icons:plus'} width={20} height={20} />
       </IconButtonAnimate>
+    }
       </Tooltip>
    </RootStyle>
   );

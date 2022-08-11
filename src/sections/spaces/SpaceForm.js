@@ -57,7 +57,7 @@ export default function SpaceForm() {
     setOpen2(false);
   };
 
-  const [formParams, updateFormParams] = useState({ spacename: '', spacedescription: '', price: '', supplypass: ''});
+  const [formParams, updateFormParams] = useState({ name: '', description: '', price: '', supplypass: ''});
   const [fileURL, setFileURL] = useState(null);
   const ethers = require("ethers");
 
@@ -88,12 +88,12 @@ export default function SpaceForm() {
 
   async function uploadMetadataToIPFS() {
 
-    const {spacename, spacedescription, price, supplypass } = formParams;
+    const {name, description, price, supplypass } = formParams;
 
-    if(!spacename || !spacedescription || !price || !supplypass || !fileURL) return;
+    if(!name || !description || !price || !supplypass || !fileURL) return;
 
     const nftJSON = {
-        spacename, spacedescription, price, supplypass, image: fileURL
+        name, description, price, supplypass, image: fileURL
     }
     
 
@@ -144,7 +144,7 @@ export default function SpaceForm() {
         setMessage2('');
         setMessage3('');
        
-        updateFormParams({ spacename: '', spacedescription: '', price: '', supplypass: ''});
+        updateFormParams({ name: '', description: '', price: '', supplypass: ''});
         setImgPre(null);
         setFileURL(null);
         
@@ -156,7 +156,7 @@ export default function SpaceForm() {
         setMessage2('');
         setMessage3('');
        
-        updateFormParams({ spacename: '', spacedescription: '', price: '', supplypass: ''});
+        updateFormParams({ name: '', description: '', price: '', supplypass: ''});
         setImgPre(null);
         setFileURL(null);
         setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
@@ -270,11 +270,11 @@ export default function SpaceForm() {
           <Card sx={{ p: 3 }}>
           <Grid container spacing={2} >
               <Grid item xs={12} >
-                  <TextField placeholder="Sora" id="spacename" label="Space Name" variant="outlined" fullWidth required autoComplete='off' onChange={e => updateFormParams({...formParams, spacename: e.target.value})} value={formParams.spacename}/>
+                  <TextField placeholder="Sora" id="name" label="Space Name" variant="outlined" fullWidth required autoComplete='off' onChange={e => updateFormParams({...formParams, name: e.target.value})} value={formParams.name}/>
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField label="Description" id="spacedescription" multiline rows={4} placeholder="Community from space" variant="outlined" fullWidth required autoComplete='off' value={formParams.spacedescription} onChange={e => updateFormParams({...formParams, spacedescription: e.target.value})}/>
+                  <TextField label="Description" id="description" multiline rows={4} placeholder="Community from space" variant="outlined" fullWidth required autoComplete='off' value={formParams.description} onChange={e => updateFormParams({...formParams, description: e.target.value})}/>
                 </Grid>
 
                 <Grid item xs={6} >

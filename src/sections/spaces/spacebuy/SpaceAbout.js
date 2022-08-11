@@ -29,7 +29,7 @@ export default function SpaceAbout({ data }) {
       <CardHeader title="Details" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">{data.spacedescription}</Typography>
+        <Typography variant="body2">{data.description}</Typography>
 
         <Stack direction="row">
           <IconStyle icon={'cryptocurrency:matic'} />

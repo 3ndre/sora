@@ -8,7 +8,7 @@ import useSettings from '../hooks/useSettings';
 import Page from '../components/Page';
 import SpaceForm from '../sections/spaces/SpaceForm';
 import SwitchNetwork from './SwitchNetwork';
-
+import { useNetwork } from 'wagmi'
 
 // ----------------------------------------------------------------------
 
@@ -16,6 +16,8 @@ export default function CreateSpace() {
   const { themeStretch } = useSettings();
 
   const { isConnected } = useAccount()
+
+  const { chain } = useNetwork()
 
   if (!isConnected) {
     return <Navigate to="/connect" />;
@@ -25,7 +27,7 @@ export default function CreateSpace() {
     <Page title="Create space">
       <Container maxWidth={themeStretch ? false : 'xl'}>
 
-        <SwitchNetwork />
+      {chain.id !== 80001 ? <SwitchNetwork/> : null}
 
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Box sx={{ flexGrow: 1 }}>

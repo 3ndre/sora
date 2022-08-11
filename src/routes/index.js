@@ -32,6 +32,7 @@ export default function Router() {
         { path: 'profile', element: <Profile/> },
         { path: 'space/:id', element: <SpaceBuy/> },
         { path: 'create', element: <CreateSpace/> },
+        
       ],
     },
     {

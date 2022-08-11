@@ -31,7 +31,7 @@ import { SpaceProfile } from '../sections/spaces/spaceprofile';
 import { SkeletonProductItem } from '../components/skeleton';
 import SwitchNetwork from './SwitchNetwork';
 
-
+import { useNetwork } from 'wagmi'
 
 
 // ----------------------------------------------------------------------
@@ -45,6 +45,7 @@ export default function SpaceBuy() {
   const { isConnected, address } = useAccount();
   const [previousAccount, ] = useState(address);
 
+  const { chain } = useNetwork()
 
 
   const tokenId = useParams().id;
@@ -108,8 +109,8 @@ export default function SpaceBuy() {
           listingId: i.listingId.toNumber(),
           supply: i.tokensAvailable.toNumber(),
           image: meta.image,
-          spacename: meta.spacename,
-          spacedescription: meta.spacedescription,
+          name: meta.name,
+          description: meta.description,
       }
 
      
@@ -149,8 +150,8 @@ export default function SpaceBuy() {
         owner: listedToken.seller,
         contractAddress: listedToken.contractAddress,
         image: meta.image,
-        spacename: meta.spacename,
-        spacedescription: meta.spacedescription,
+        name: meta.name,
+        description: meta.description,
         supplypass: meta.supplypass,
         listingId: listingId,
     }
@@ -186,7 +187,7 @@ useEffect(() => {
       
       <Container maxWidth={themeStretch ? false : 'lg'}>
 
-        <SwitchNetwork/>
+      {chain.id !== 80001 ? <SwitchNetwork/> : null}
 
 
         {data === '' ? <SkeletonProductItem/> :
@@ -196,7 +197,7 @@ useEffect(() => {
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Box sx={{ flexGrow: 1 }}>
         <Typography variant="h3" sx={{mb: 3}}>
-                {tokenamount > 0 || address === data.owner ? <><span style={{color: 'gray'}}>Welcome to</span> {data.spacename} </> : <>Join {data.spacename}</>}
+                {tokenamount > 0 || address === data.owner ? <><span style={{color: 'gray'}}>Welcome to</span> {data.name} </> : <>Join {data.name}</>}
         </Typography>
         {tokenamount > 0 || address === data.owner ? (
         <Box sx={{ flexShrink: 0 }}> 

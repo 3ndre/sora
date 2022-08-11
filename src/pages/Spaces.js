@@ -59,8 +59,8 @@ export default function Spaces() {
             listingId: i.listingId.toNumber(),
             supply: i.tokensAvailable.toNumber(),
             image: meta.image,
-            spacename: meta.spacename,
-            spacedescription: meta.spacedescription,
+            name: meta.name,
+            description: meta.description,
         }
 
        

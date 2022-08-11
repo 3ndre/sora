@@ -25,8 +25,11 @@ import {
   ProfileFollowers,
 } from '../sections/user/profile';
 import SwitchNetwork from './SwitchNetwork';
+import { useNetwork } from 'wagmi'
+
 
 // ----------------------------------------------------------------------
+
 
 const TabsWrapperStyle = styled('div')(({ theme }) => ({
   zIndex: 9,
@@ -49,7 +52,8 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 export default function UserProfile() {
   const { themeStretch } = useSettings();
 
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
+  const { chain } = useNetwork()
 
   const { user } = useAuth();
 
@@ -85,7 +89,7 @@ export default function UserProfile() {
   ];
 
 
-  
+
 
   if (!isConnected) {
     return <Navigate to="/connect" />;
@@ -96,7 +100,7 @@ export default function UserProfile() {
     <Page title="Profile">
       <Container maxWidth={themeStretch ? false : 'lg'}>
 
-        <SwitchNetwork/>
+      {chain.id !== 80001 ? <SwitchNetwork/> : null}
        
         <Card
           sx={{
