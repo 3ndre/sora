@@ -28,7 +28,11 @@ import ListItemText from '@mui/material/ListItemText';
 
 import Iconify from '../../components/Iconify';
 
-
+//--------------------form-----------------------------------
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 
 // ----------------------------------------------------------------------
@@ -58,11 +62,37 @@ export default function SpaceForm() {
   };
 
 
+  
+
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const handleChange2 = (event) => {
+    setSpaceType(event.target.value);
+  }
+
   const handleClose2 = () => {
     setOpen2(false);
   };
 
   const [formParams, updateFormParams] = useState({ name: '', description: '', price: '', supplypass: ''});
+
+  //category-----------------------------------------------
+  const [category, setCategory] = useState('');
+  const [fetchCategory, setFetchCategory] = useState(null); //fetching category
+
+  const [spacetype, setSpaceType] = useState('');
+  const fetchedSpaceType = [{id: 1, name: 'Public'}, {id: 2, name: 'Private'}];
+
+  
+  async function getAllCategory() {
+
+    let category = await axios.get('http://localhost:5000/api/category');
+    setFetchCategory(category.data);//getting category
+}
+//--------------------------------------------------------------------------
+
   const [fileURL, setFileURL] = useState(null);
   const ethers = require("ethers");
 
@@ -154,7 +184,8 @@ export default function SpaceForm() {
           description: formParams.description,
           contractAddress: ABIS.address,
           signature: userSignature,
-          category: 'Gaming',
+          category: category,
+          type: spacetype,
           supply: formParams.supplypass,
           price: formParams.price,
           image: IPFSImage,
@@ -192,6 +223,8 @@ export default function SpaceForm() {
         setMessage3('');
        
         updateFormParams({ name: '', description: '', price: '', supplypass: ''});
+        setCategory('');
+        setSpaceType('');
         setImgPre(null);
         setFileURL(null);
         
@@ -204,6 +237,8 @@ export default function SpaceForm() {
         setMessage3('');
        
         updateFormParams({ name: '', description: '', price: '', supplypass: ''});
+        setCategory('');
+        setSpaceType('');
         setImgPre(null);
         setFileURL(null);
         setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
@@ -215,6 +250,8 @@ export default function SpaceForm() {
 
 
  
+if(!fetchCategory) 
+getAllCategory();
 
   
 
@@ -330,6 +367,50 @@ export default function SpaceForm() {
 
                 <Grid item xs={6} >
                   <TextField placeholder="0.01 Matic" label="Pass price (in Matic)" type="number" variant="outlined" fullWidth required autoComplete='off' value={formParams.price} onChange={e => updateFormParams({...formParams, price: e.target.value})}/>
+                </Grid>
+
+                <Grid item xs={6} >
+                <FormControl fullWidth required autoComplete='off'>
+                    <InputLabel id="category">Category</InputLabel>
+                    <Select
+                      labelId="space-category"
+                      id="space-category"
+                      value={category}
+                      label="Category "
+                      onChange={handleChange}
+                      fullWidth required autoComplete='off'
+                    >
+                      {fetchCategory && fetchCategory.map(val => {
+                                  return (
+                                    <MenuItem key={val.id} value={val.category} style={{textTransform: 'capitalize'}}>
+                                      {val.category}
+                                    </MenuItem>
+                                  )
+                        })}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={6} >
+                <FormControl fullWidth required autoComplete='off'>
+                    <InputLabel id="space-type">Space type</InputLabel>
+                    <Select
+                      labelId="space-type"
+                      id="space-type"
+                      value={spacetype}
+                      label="Space type "
+                      onChange={handleChange2}
+                      fullWidth required autoComplete='off'
+                    >
+                      {fetchedSpaceType && fetchedSpaceType.map(val => {
+                                  return (
+                                    <MenuItem key={val.id} value={val.name} style={{textTransform: 'capitalize'}}>
+                                      {val.name}
+                                    </MenuItem>
+                                  )
+                        })}
+                    </Select>
+                  </FormControl>
                 </Grid>
 
 

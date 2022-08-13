@@ -85,7 +85,7 @@ export default function SpaceMarketList({data, tokenamount}) {
        
         let item = {
             price,
-            tokenId: i.tokenId.toNumber(),
+            tokenId: parseInt(i.tokenId.toString()),
             seller: i.seller,
             completed: i.completed,
             contractAddress: i.contractAddress,

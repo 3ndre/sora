@@ -51,8 +51,34 @@ export default function SpaceBuy() {
   const tokenId = useParams().id;
 
 
-
   const [data, updateData] = useState('');
+
+  const [spaceDataById, setSpaceDataById] = useState(null);
+
+  //----------------------------------------------------------------------
+  async function getSpaceById() {
+
+    const userSignature = JSON.parse(localStorage.getItem('signature'))
+   
+    let meta = await axios.get('http://localhost:5000/api/spaces');
+
+   const space_id = meta.data.find(x => x.tokenId === parseInt(tokenId))._id; //space id from backend
+  
+
+   let axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+        "x-auth-token": userSignature.toString(),
+    }
+  };
+
+   let meta2 = await axios.get(`http://localhost:5000/api/spaces/${space_id}`, axiosConfig);
+
+    setSpaceDataById(meta2.data); //getting space data by id
+}
+
+//----------------------------------------------------------------------
   
 
   const [, updateDataFetched] = useState(false);
@@ -103,7 +129,7 @@ export default function SpaceBuy() {
      
       let item = {
           price,
-          tokenId: i.tokenId.toNumber(),
+          tokenId: parseInt(i.tokenId.toString()),
           seller: i.seller,
           contractAddress: i.contractAddress,
           listingId: i.listingId.toNumber(),
@@ -112,6 +138,7 @@ export default function SpaceBuy() {
           name: meta.name,
           description: meta.description,
       }
+     
 
      
       return item;
@@ -129,6 +156,7 @@ export default function SpaceBuy() {
     //create an NFT Token
     const tokenURI = await contract.uri(tokenId);
     const listedToken = await contract.viewListingById(uniquelistingID);
+   
 
     
     let meta = await axios.get(tokenURI);
@@ -168,6 +196,7 @@ export default function SpaceBuy() {
 
 
 useEffect(() => {
+  getSpaceById();
   getNFTData(tokenId);
   if(address !== previousAccount){
     getNFTData(tokenId);
@@ -175,7 +204,8 @@ useEffect(() => {
 }, [address])
 
 
-  
+
+  // console.log(spaceDataById)
 
   if (!isConnected) {
     return <Navigate to="/connect" />;
@@ -197,17 +227,30 @@ useEffect(() => {
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Box sx={{ flexGrow: 1 }}>
         <Typography variant="h3" sx={{mb: 3}}>
-                {tokenamount > 0 || address === data.owner ? <><span style={{color: 'gray'}}>Welcome to</span> {data.name} </> : <>Join {data.name}</>}
+                {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ? <><span style={{color: 'gray'}}>Welcome to</span> {data.name} </> : <>Join {data.name}</>}
         </Typography>
-        {tokenamount > 0 || address === data.owner ? (
+        {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ? (
+        <Box sx={{ flexShrink: 0 }}> 
+        <Typography variant="subtitle" sx={{color: 'gray'}}>
+        Category: <Label color={'error'} sx={{ textTransform: 'capitalize' }}>
+          {spaceDataById && spaceDataById.category}
+        </Label>
+        </Typography>
+       
+        </Box>
+        ) : null}
+            
+        </Box>
+
+       
+        {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ? (
         <Box sx={{ flexShrink: 0 }}> 
         <Label color={'success'} sx={{ textTransform: 'capitalize' }}>
-          Members Only
+         { spaceDataById && spaceDataById.type === 'Public' ? <>Public space</> : <>Members Only</>} 
         </Label>
         </Box>
         ) : null}
-          
-        </Box>
+
         </Box>     
        
 
@@ -222,7 +265,7 @@ useEffect(() => {
               variant="scrollable"
               scrollButtons="auto"
               >
-            {tokenamount > 0 || address === data.owner ?
+            {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ?
             <Tab label="All posts" disableRipple icon={<Iconify icon={'gridicons:posts'} width={20} height={20} />} value="1" />
             : <Tab label="Details" disableRipple icon={<Iconify icon={'gridicons:posts'} width={20} height={20} />} value="1" />}
 
@@ -230,7 +273,7 @@ useEffect(() => {
             <Tab label="Holders" disableRipple icon={<Iconify icon={'icon-park-solid:passport'} width={20} height={20} />} value="3" />
           </TabList>
       
-          {tokenamount > 0 || address === data.owner ?
+          {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ?
         <TabPanel value="1"><SpaceProfile data={data} tokensCollected={tokensCollected} /></TabPanel>
         : <TabPanel value="1"><SpaceBuyProfile data={data} tokensCollected={tokensCollected} /></TabPanel> }
 

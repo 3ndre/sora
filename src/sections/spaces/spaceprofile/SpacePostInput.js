@@ -4,7 +4,8 @@ import axios from "axios";
 import { useState } from "react";
 // @mui
 import { Box, Card, Button, TextField, Stack} from '@mui/material';
-
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 //mui alert
 import Snackbar from '@mui/material/Snackbar';
@@ -22,8 +23,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function SpacePostInput({tokenId}) {
 
-  
-
   const { address } = useAccount()
 
   const userSignature = JSON.parse(localStorage.getItem('signature'))
@@ -37,7 +36,13 @@ export default function SpacePostInput({tokenId}) {
   const [alertMessage, setAlertMessage] = useState('');
   const [open, setOpen] = useState(false);
 
+  const [checked, setChecked] = useState(false);
 
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -65,6 +70,7 @@ export default function SpacePostInput({tokenId}) {
       text: formParams.text,
       wallet: address,
       signature: userSignature,
+      members: checked,
     };
     
     
@@ -83,6 +89,7 @@ export default function SpacePostInput({tokenId}) {
       setMessage("Post created successfully!");
       setOpen(true);
       updateFormParams({ text: ''});
+      window.location.reload();
     })
     .catch((err) => {
       setMessage("");
@@ -145,6 +152,15 @@ if(!dataFetched)
         }}
       >
           <Box sx={{ display: 'flex' }}>
+          <FormControlLabel
+           control={  
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+          } label="Members only"  sx={{color: checked === true ? '#00ac56' : 'gray'}}/>
+        
           
         </Box>
         <Button variant="contained" onClick={createSpacePost}>Post</Button>

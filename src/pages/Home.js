@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 // @mui
 import { Container, Grid } from '@mui/material';
 // hooks
@@ -13,7 +15,24 @@ import HomeTrending from '../sections/general/HomeTrending';
 export default function Home() {
   const { themeStretch } = useSettings();
 
-  
+
+  const [spaceData, setSpaceData] = useState(null);
+
+  //----------------------------------------------------------------------
+  async function getSpace() {
+   
+    let meta = await axios.get('http://localhost:5000/api/spaces');
+
+    setSpaceData(meta.data); //getting space data 
+}
+
+
+//----------------------------------------------------------------------
+if(spaceData === null)
+  getSpace();
+
+
+
 
   return (
     <Page title="Home">
@@ -28,7 +47,7 @@ export default function Home() {
             </Grid>
 
             <Grid item xs={12}>
-              <HomeTrending />
+              <HomeTrending spaceData={spaceData} />
             </Grid>
 
             

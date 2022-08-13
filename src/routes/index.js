@@ -1,11 +1,12 @@
 import { Suspense, lazy } from 'react';
-import { Navigate, useRoutes, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
+import { Navigate, useRoutes, useLocation, useNavigate } from 'react-router-dom';
 // layouts
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from '../components/LoadingScreen';
-
 
 // ----------------------------------------------------------------------
 
@@ -21,6 +22,25 @@ const Loadable = (Component) => (props) => {
 };
 
 export default function Router() {
+
+  const { address } = useAccount();
+  const [previousAccount, ] = useState(address);
+
+
+
+  const navigates = useNavigate();
+
+  useEffect(() => {
+    if(address !== previousAccount){
+      localStorage.removeItem('signature');
+      navigates('/profile');
+  }
+  }, [address])
+
+
+
+
+
   return useRoutes([
     
     {

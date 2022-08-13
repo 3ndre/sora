@@ -35,6 +35,13 @@ export default function AccountPopover() {
   const { disconnect } = useDisconnect()
 
 
+  function disconnected () {
+    disconnect()
+    localStorage.clear();
+    localStorage.removeItem('signature');
+  }
+
+
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -101,7 +108,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem sx={{ m: 1 }} onClick={disconnect}>Disconnect</MenuItem>
+        <MenuItem sx={{ m: 1 }} onClick={disconnected}>Disconnect</MenuItem>
       </MenuPopover>
     </>
   );

@@ -12,10 +12,48 @@ import SvgIconStyle from '../../components/SvgIconStyle';
 
 // ----------------------------------------------------------------------
 
+import axios from 'axios'
+import { useSignMessage } from 'wagmi'
+import { useAccount } from 'wagmi'
 // ----------------------------------------------------------------------
 
 
 export default function SpaceCard({space}) {
+
+
+  const { address } = useAccount()
+
+  
+  const { data, signMessage } = useSignMessage({
+    message: `Welcome to Soraspace! Click to accept the terms and conditions! User: ${address}`,
+  })
+
+ 
+    var postData = {
+      wallet: address,
+      signature: data,
+    };
+    
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
+    
+    if(data && address !== null) {
+    axios.post('http://localhost:5000/api/users', postData, axiosConfig)
+    .then((res) => {
+      console.log("User Signed In: ", res);
+      localStorage.setItem('signature', JSON.stringify(data))
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log("Sign In unsuccessful");
+      localStorage.setItem('signature', JSON.stringify(data))
+      window.location.reload();
+    })}
+
   
 
   return (
@@ -62,7 +100,7 @@ export default function SpaceCard({space}) {
       </Typography>
 
       <Stack sx={{py: 2}} alignItems="center">
-      <Button to={`/space/${space.tokenId}`} variant="contained" component={RouterLink}>Join</Button>
+      {localStorage.getItem('signature') === null ? <Button  variant="contained"onClick={() => signMessage()}>Join</Button> : <Button to={`/space/${space.tokenId}`} variant="contained" component={RouterLink}>Join</Button>}
       </Stack>
 
 
