@@ -61,7 +61,7 @@ export default function SpaceMainCard({data, tokensCollected}) {
         //Pull the deployed contract instance
         let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer);
         const salePrice = ethers.utils.parseUnits(data.price, 'ether')
-        setMessage("Buying the NFT... Please Wait (Upto 5 mins)")
+      
         //run the executeSale function
         let transaction = await contract.purchaseToken(data.listingId, 1, {value: salePrice});
         await transaction.wait();

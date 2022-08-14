@@ -158,7 +158,7 @@ getAllSpaces();
   </Stack>
 
 
-     {spacepost && spacepost.length !== null ? spacepost.map(post => (
+     {spacepost && spacepost.length !== null ? spacepost.map((post, index) => (
 
 <>
 {post.members === 'false' ? 
@@ -302,7 +302,7 @@ getAllSpaces();
     
     : 
 
-    <Card key={post._id}>
+    <Card key={index}>
 
      <CardHeader
       disableTypography

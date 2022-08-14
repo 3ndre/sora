@@ -163,7 +163,11 @@ if(!dataFetched)
         
           
         </Box>
-        <Button variant="contained" onClick={createSpacePost}>Post</Button>
+        {formParams.text === '' ? 
+          <Button variant="contained" disabled onClick={createSpacePost}>Post</Button>
+        :
+          <Button variant="contained" onClick={createSpacePost}>Post</Button>
+        }
       </Box>
 
       

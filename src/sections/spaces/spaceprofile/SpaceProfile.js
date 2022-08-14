@@ -13,6 +13,11 @@ import useResponsive from '../../../hooks/useResponsive';
 
 import ABIS from '../../../abis/abis.json';
 import SpacePostInput2 from './SpacePostInput2';
+import CreateDrop from './CreateDrop';
+import BuyDrop from './BuyDrop';
+import SpaceTopCard from '../../../sections/card/SpaceTopCard';
+
+
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +26,9 @@ SpaceProfile.propTypes = {
   posts: PropTypes.array,
 };
 
-export default function SpaceProfile({ data, tokensCollected }) {
+export default function SpaceProfile({ data, tokensCollected, spaceDropById }) {
+
+
 
 
   const isDesktop = useResponsive('up', 'lg');
@@ -55,18 +62,52 @@ if(!dataFetched)
     getNFTData();
   
 
-
   return (
-    <Grid container spacing={3}>
+    <>
+    
+    <Grid container spacing={3}>  
 
      
       <Grid item xs={12} md={8}>
         <Stack spacing={2}>
 
+
+        <span style={{display: 'flex'}}>
+
+        {spaceDropById && spaceDropById.drops.length > 0 ? 
+        <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
+          <BuyDrop tokenId={data.tokenId} spaceDropById={spaceDropById}/>
+        </Grid>
+        :  address === data.owner ? (
+        <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
+          <CreateDrop tokenId={data.tokenId} spaceDropById={spaceDropById}/> 
+          </Grid>)
+          :
+       
+        <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
+          <SpaceTopCard title="No Drops available" color='error' icon={'fa6-solid:gift'}/>
+        </Grid>}
+
+
+      
+        
+        
+
+        <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
+          <SpaceTopCard title="Chat room" color='info' icon={'bi:chat-left-text-fill'}/>
+        </Grid>
+          </span> 
+          
+
+
+       
+     
           {tokenamount > 0 || address === data.owner ? 
           <SpacePostInput tokenId={data.tokenId}/>
          : <SpacePostInput2/>}
-          
+
+      
+
             <SpacePostCard tokenId={data.tokenId} tokenamount={tokenamount}/> 
        
         </Stack>
@@ -85,5 +126,6 @@ if(!dataFetched)
 
       
     </Grid>
+    </>
   );
 }

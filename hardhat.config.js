@@ -20,7 +20,7 @@ module.exports = {
     },
     matic: {
       url: 'https://polygon-mumbai.g.alchemy.com/v2/ENZXGT0Qxaq7fqJLJcYoJRThBUY3yZnY', 
-      accounts: ["5f4b28498bb22f69764fbc5560bc84993e45db14929b8f6bd5a7d92ff6a188a5"],
+      accounts: [""],
     }
   },
   solidity: {

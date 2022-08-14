@@ -204,7 +204,6 @@ useEffect(() => {
 }, [address])
 
 
-
   // console.log(spaceDataById)
 
   if (!isConnected) {
@@ -274,7 +273,7 @@ useEffect(() => {
           </TabList>
       
           {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ?
-        <TabPanel value="1"><SpaceProfile data={data} tokensCollected={tokensCollected} /></TabPanel>
+        <TabPanel value="1"><SpaceProfile data={data} tokensCollected={tokensCollected} spaceDropById={spaceDataById} /></TabPanel>
         : <TabPanel value="1"><SpaceBuyProfile data={data} tokensCollected={tokensCollected} /></TabPanel> }
 
         <TabPanel value="2"><SpaceMarketList data={data} tokenamount={tokenamount} /></TabPanel>

@@ -366,7 +366,7 @@ getAllCategory();
                 </Grid>
 
                 <Grid item xs={6} >
-                  <TextField placeholder="0.01 Matic" label="Pass price (in Matic)" type="number" variant="outlined" fullWidth required autoComplete='off' value={formParams.price} onChange={e => updateFormParams({...formParams, price: e.target.value})}/>
+                  <TextField placeholder="0.01 Matic" label="Pass price (in Matic)" type="number" variant="outlined"  fullWidth required autoComplete='off' value={formParams.price} onChange={e => updateFormParams({...formParams, price: e.target.value})}/>
                 </Grid>
 
                 <Grid item xs={6} >

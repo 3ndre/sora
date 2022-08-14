@@ -63,6 +63,7 @@ export default function CreatePopover() {
     .catch((err) => {
       console.log("Sign In unsuccessful");
       localStorage.setItem('signature', JSON.stringify(data))
+      navigate('/create')
     })}
 
 
