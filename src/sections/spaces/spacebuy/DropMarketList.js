@@ -28,17 +28,16 @@ import useSettings from '../../../hooks/useSettings';
 // components
 import Page from '../../../components/Page';
 import Scrollbar from '../../../components/Scrollbar';
-import ListMemberpass from '../ListMemberpass';
-import DeListing from '../DeListing';
-import ListingBuy from '../ListingBuy';
 import { SkeletonPostItem2 } from '../../../components/skeleton';
+import DropBuy from '../DropBuy';
+import DeListDrop from '../DeListDrop';
 
 
 // ----------------------------------------------------------------------
 
 
 
-export default function SpaceMarketList({data, tokenamount}) {
+export default function DropMarketList({data}) {
 
 
 
@@ -70,7 +69,7 @@ export default function SpaceMarketList({data, tokenamount}) {
    
 
     //Fetch all the details of every NFT from the contract and display
-    const items = await Promise.all(transaction.map(async i => {
+    var items = await Promise.all(transaction.map(async i => {
 
       
         const tokenURI = await contract.uri(i.tokenId);
@@ -98,19 +97,18 @@ export default function SpaceMarketList({data, tokenamount}) {
         return item;
     }))
 
-    const customers = items.reduce((dict, data) => {
-      if (!dict[data.tokenId]) dict[data.tokenId] = [];
-      dict[data.tokenId].push(data);
-      return dict;
-    }, {});
 
-    const listedItemsbyId = customers[data.tokenId];
+    
+
+    items = items.filter(function (el) {
+        return this.has(el.tokenId);
+    }, new Set(data.drops.map(el => el.dropId)));
+    
 
    
     updateFetched(true);
-    updateListingData(listedItemsbyId);
+    updateListingData(items);
 }
-
 
 
 if(!dataFetched)
@@ -118,28 +116,23 @@ if(!dataFetched)
 
 
   return (
-    <Page title="Listed memberpass">
+    <Page title="Listed drops">
       <Container maxWidth={themeStretch ? false : 'lg'}>
 
 
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4" gutterBottom>
-            Listed memberpass
+            Listed drops
           </Typography>
 
           <Typography variant="subtitle" gutterBottom sx={{mt: 4, color: 'gray'}}>
-            (Buy memberpass directly from the community market)
+            (Buy drops directly from the community market)
           </Typography>
           
         </Box>
 
-        
-    {tokenamount > 0 && (
-       <Box sx={{ flexShrink: 0 }}> 
-        <ListMemberpass data={data} tokenamount={tokenamount}/>
-       </Box>
-       )}
+
 
       </Box>
 
@@ -168,7 +161,7 @@ if(!dataFetched)
                     <TableRow>
 
                         <TableCell>
-                          Pass
+                          Drop
                         </TableCell>
 
                         <TableCell>
@@ -176,7 +169,7 @@ if(!dataFetched)
                         </TableCell>
 
                         <TableCell>
-                          Memberpass amount
+                          Drop amount
                         </TableCell>
 
                         <TableCell>
@@ -205,8 +198,9 @@ if(!dataFetched)
                               <Avatar src={item.image} alt="" />
 
                               </TableCell>
+                              
 
-                              <TableCell align="left">
+                              <TableCell align="left" >
 
                                   {item.seller}
                                   
@@ -219,8 +213,8 @@ if(!dataFetched)
                               <TableCell align="left">
 
                         {address === item.seller ? 
-                            <DeListing listingId={item.listingId} completed={item.completed}/>
-                          : <ListingBuy listingId={item.listingId} availableamount={item.supply} price={item.price} completed={item.completed}/>}
+                            <DeListDrop listingId={item.listingId} completed={item.completed}/>
+                          : <DropBuy listingId={item.listingId} availableamount={item.supply} price={item.price} completed={item.completed}/>}
 
                         </TableCell>
 

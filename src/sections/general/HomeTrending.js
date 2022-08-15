@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import { useRef } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Box, Stack, Avatar, Typography, Paper, CardHeader } from '@mui/material';
+import { Box, Stack, Avatar, Typography, Paper, CardHeader} from '@mui/material';
 // utils
 import { fDateTime } from '../../utils/formatTime';
 // _mock_
@@ -59,8 +59,8 @@ export default function HomeTrending() {
   return (
     <Box sx={{ py: 2 }}>
       <CardHeader
-        title="Trending spaces"
-        subheader="Explores the most popular spaces"
+        title="Trending spaces 🔥"
+        subheader="Explore the most popular spaces"
         action={
           <CarouselArrows
             customIcon={'ic:round-keyboard-arrow-right'}
@@ -133,17 +133,7 @@ function TrendingItem({ item }) {
           </div>
         </Stack>
 
-        <Stack direction="row" alignItems="center" spacing={3} sx={{ color: 'text.secondary' }}>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Iconify icon={'ic:round-vpn-key'} width={16} height={16} />
-            <Typography variant="caption">Room {roomNumber}</Typography>
-          </Stack>
-
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Iconify icon={'eva:people-fill'} width={16} height={16} />
-            <Typography variant="caption">{person} Person</Typography>
-          </Stack>
-        </Stack>
+      
       </Stack>
 
       

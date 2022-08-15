@@ -32,6 +32,7 @@ import { SkeletonProductItem } from '../components/skeleton';
 import SwitchNetwork from './SwitchNetwork';
 
 import { useNetwork } from 'wagmi'
+import DropMarketList from '../sections/spaces/spacebuy/DropMarketList';
 
 
 // ----------------------------------------------------------------------
@@ -226,7 +227,7 @@ useEffect(() => {
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Box sx={{ flexGrow: 1 }}>
         <Typography variant="h3" sx={{mb: 3}}>
-                {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ? <><span style={{color: 'gray'}}>Welcome to</span> {data.name} </> : <>Join {data.name}</>}
+                {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ? <><span style={{color: 'gray'}}>Welcome to</span> {data.name} <Iconify icon={'emojione:waving-hand'} sx={{mr: 1}} />  </> : <><span style={{color: 'gray'}}>Join</span> {data.name} <Iconify icon={'emojione:admission-tickets'} sx={{mr: 1}} /></>}
         </Typography>
         {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ? (
         <Box sx={{ flexShrink: 0 }}> 
@@ -269,6 +270,7 @@ useEffect(() => {
             : <Tab label="Details" disableRipple icon={<Iconify icon={'gridicons:posts'} width={20} height={20} />} value="1" />}
 
             <Tab label="Market" disableRipple icon={<Iconify icon={'healthicons:market-stall'} width={20} height={20} />} value="2" />
+            <Tab label="Drops" disableRipple icon={<Iconify icon={'fa6-solid:gift'} width={20} height={20} />} value="4" />
             <Tab label="Holders" disableRipple icon={<Iconify icon={'icon-park-solid:passport'} width={20} height={20} />} value="3" />
           </TabList>
       
@@ -277,6 +279,7 @@ useEffect(() => {
         : <TabPanel value="1"><SpaceBuyProfile data={data} tokensCollected={tokensCollected} /></TabPanel> }
 
         <TabPanel value="2"><SpaceMarketList data={data} tokenamount={tokenamount} /></TabPanel>
+        <TabPanel value="4"><DropMarketList data={spaceDataById} /></TabPanel>
         <TabPanel value="3"><SpaceHolder buyer={buyer} /></TabPanel>
       </TabContext>
 

@@ -16,6 +16,7 @@ import SpacePostInput2 from './SpacePostInput2';
 import CreateDrop from './CreateDrop';
 import BuyDrop from './BuyDrop';
 import SpaceTopCard from '../../../sections/card/SpaceTopCard';
+import SpaceChat from './SpaceChat';
 
 
 
@@ -74,18 +75,20 @@ if(!dataFetched)
 
         <span style={{display: 'flex'}}>
 
-        {spaceDropById && spaceDropById.drops.length > 0 ? 
+        { address === data.owner ? 
         <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
-          <BuyDrop tokenId={data.tokenId} spaceDropById={spaceDropById}/>
+        <CreateDrop tokenId={data.tokenId} spaceDropById={spaceDropById}/> 
         </Grid>
-        :  address === data.owner ? (
-        <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
-          <CreateDrop tokenId={data.tokenId} spaceDropById={spaceDropById}/> 
-          </Grid>)
+        : spaceDropById && spaceDropById.drops.length > 0 ? (
+          <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
+          <BuyDrop tokenId={data.tokenId} spaceDropById={spaceDropById}/>
+        </Grid>)
           :
        
         <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
+          <span style={{cursor: 'pointer'}}>
           <SpaceTopCard title="No Drops available" color='error' icon={'fa6-solid:gift'}/>
+          </span>
         </Grid>}
 
 
@@ -94,8 +97,15 @@ if(!dataFetched)
         
 
         <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
-          <SpaceTopCard title="Chat room" color='info' icon={'bi:chat-left-text-fill'}/>
+        {tokenamount > 0 || address === data.owner ?
+          <SpaceChat tokenamount={tokenamount} spaceDropById={spaceDropById}/>
+          : 
+          <span style={{cursor: 'pointer'}}>
+          <SpaceTopCard title="Members Only" color='secondary' icon={'bi:chat-left-text-fill'}/>
+          </span>
+          }
         </Grid>
+
           </span> 
           
 
@@ -119,7 +129,7 @@ if(!dataFetched)
         <Stack spacing={3}>
           <SpaceMainCard2 data={data} tokensCollected={tokensCollected}/>
           <SpaceMemberInfo data={data} tokensCollected={tokensCollected} />
-          <SpaceAbout data={data} />
+          <SpaceAbout data={spaceDropById} />
         </Stack>
       </Grid>
       }

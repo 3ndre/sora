@@ -6,6 +6,7 @@ import useSettings from '../../hooks/useSettings';
 
 // components
 import Page from '../../components/Page';
+import Iconify from '../../components/Iconify';
 
 // sections
 import SpaceCard from '../../sections/card/SpaceCard';
@@ -21,8 +22,8 @@ export default function SpaceList({data}) {
     <Page title="Explore">
       <Container maxWidth={themeStretch ? false : 'lg'}>
 
-      <Typography variant="h4" gutterBottom>
-            Explore spaces
+      <Typography variant="h4" gutterBottom style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap',}}>
+      <Iconify icon={'emojione:rocket'} sx={{mr: 1}} />  Explore spaces
           </Typography>
        
         <Box

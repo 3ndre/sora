@@ -1,6 +1,7 @@
 
 // @mui
 import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Card, Avatar, Typography, Stack, Button } from '@mui/material';
 
@@ -22,6 +23,8 @@ export default function SpaceCard({space}) {
 
 
   const { address } = useAccount()
+
+  const navigate = useNavigate()
 
   
   const { data, signMessage } = useSignMessage({
@@ -46,12 +49,12 @@ export default function SpaceCard({space}) {
     .then((res) => {
       console.log("User Signed In: ", res);
       localStorage.setItem('signature', JSON.stringify(data))
-      window.location.reload();
+      navigate(`/space/${space.tokenId}`)
     })
     .catch((err) => {
       console.log("Sign In unsuccessful");
       localStorage.setItem('signature', JSON.stringify(data))
-      window.location.reload();
+      navigate(`/space/${space.tokenId}`)
     })}
 
   
@@ -91,7 +94,7 @@ export default function SpaceCard({space}) {
         <Image src={space.image} alt="" ratio="16/9" />
       </Box>
 
-      <Typography variant="subtitle1" sx={{ mt: 6 }}>
+      <Typography variant="subtitle1" sx={{ mt: 6 }} style={{textTransform: 'capitalize'}}>
         {space.name}
       </Typography>
 
@@ -100,7 +103,7 @@ export default function SpaceCard({space}) {
       </Typography>
 
       <Stack sx={{py: 2}} alignItems="center">
-      {localStorage.getItem('signature') === null ? <Button  variant="contained"onClick={() => signMessage()}>Join</Button> : <Button to={`/space/${space.tokenId}`} variant="contained" component={RouterLink}>Join</Button>}
+      {localStorage.getItem('signature') === null ? <Button  variant="contained"onClick={() => signMessage()}>Visit</Button> : <Button to={`/space/${space.tokenId}`} variant="contained" component={RouterLink}>Visit</Button>}
       </Stack>
 
 

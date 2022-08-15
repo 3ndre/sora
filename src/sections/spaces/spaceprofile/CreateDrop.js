@@ -33,7 +33,6 @@ import Iconify from '../../../components/Iconify';
 import SpaceTopCard from "../../../sections/card/SpaceTopCard";
 
 
-
 //global variables
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -42,6 +41,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 const CreateDrop = ({spaceDropById}) => {
+
+ 
 
     const { address } = useAccount()
 
@@ -306,6 +307,7 @@ const CreateDrop = ({spaceDropById}) => {
       </Dialog>
 
 
+      
       <Dialog
         open={open}
         onClose={handleClose}
@@ -317,9 +319,9 @@ const CreateDrop = ({spaceDropById}) => {
           {"Create new drop"}
         </DialogTitle>
 
+       
         <DialogContent>
 
-       
 
           <Typography variant="subtitle" sx={{color: 'gray'}}>(Create a new NFT drop for your community)</Typography>
 
@@ -387,7 +389,10 @@ const CreateDrop = ({spaceDropById}) => {
      
     </Grid>
 
+   
+
         </DialogContent>
+
         <DialogActions>
 
          
@@ -403,7 +408,6 @@ const CreateDrop = ({spaceDropById}) => {
 
         </DialogActions>
       </Dialog>
-
 
     
 

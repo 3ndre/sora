@@ -34,7 +34,7 @@ export default function CreateSpace() {
        
 
         <Typography variant="h3" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap',}}>
-        <Iconify icon={'cil:room'} sx={{mr: 1}} /> Create new space
+        <Iconify icon={'emojione:crayon'} sx={{mr: 1}} /> Create new space
         </Typography>
     
    

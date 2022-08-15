@@ -32,11 +32,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 
-const ListingBuy = ({listingId, availableamount, price, completed}) => {
+const DropBuy = ({listingId, availableamount, price, completed}) => {
 
 
     const [open, setOpen] = useState(false);
-
     const [open2, setOpen2] = useState(false);
 
     const [buying, setBuying] = useState(false);
@@ -46,6 +45,7 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
     const [message, setMessage] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
 
+
     const handleClose2 = (event, reason) => {
       if (reason === 'clickaway') {
         return;
@@ -53,7 +53,6 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
   
       setOpen2(false);
     };
-
 
 
     async function buylistedToken(e, listingId) {
@@ -85,6 +84,7 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
       } catch (e) {
         setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
         setOpen(false);
+        updateFormParams({ amount: ''});
         setOpen2(true);
         setBuying(false);
       }
@@ -110,6 +110,7 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
   return (
     <>
 
+
 <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
       {alertMessage ?
@@ -125,6 +126,7 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
     </Snackbar>
   </Stack>
 
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -133,14 +135,12 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
       >
         
          <DialogTitle id="alert-dialog-title" >
-          {"Buy Memberpass"} <Typography variant="subtitle" sx={{color: 'gray'}}>(<span style={{color: '#00ac56'}}>{availableamount} available</span>)</Typography>
+          {"Buy Drop"} <Typography variant="subtitle" sx={{color: 'gray'}}>(<span style={{color: '#00ac56'}}>{availableamount} available</span>)</Typography>
         </DialogTitle>
 
         <DialogContent>
 
-        <Typography variant="subtitle" sx={{color: 'gray'}}>{message}</Typography>
-
-          
+        
 
 
         <Grid style={{ maxWidth: 450, padding: "5px 5px", margin: "0 auto" }}>
@@ -172,7 +172,7 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
 
           <Button onClick={handleClose} style={{color: 'white'}}>Cancel</Button>
 
-          {buying === true ?
+        {buying === true ?
           <Button disabled form="buy-form-id"  autoFocus>
            Processing...
           </Button>
@@ -201,4 +201,4 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
   );
 };
 
-export default ListingBuy;
+export default DropBuy;
