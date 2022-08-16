@@ -82,6 +82,7 @@ export default function SpaceMarketList({data, tokenamount}) {
        
 
         let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
+        
        
         let item = {
             price,

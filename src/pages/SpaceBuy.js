@@ -266,12 +266,12 @@ useEffect(() => {
               scrollButtons="auto"
               >
             {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ?
-            <Tab label="All posts" disableRipple icon={<Iconify icon={'gridicons:posts'} width={20} height={20} />} value="1" />
-            : <Tab label="Details" disableRipple icon={<Iconify icon={'gridicons:posts'} width={20} height={20} />} value="1" />}
+            <Tab label="All posts" disableRipple icon={<Iconify icon={'emojione-v1:note-page'} width={20} height={20} />} value="1" />
+            : <Tab label="Details" disableRipple icon={<Iconify icon={'emojione:page-with-curl'} width={20} height={20} />} value="1" />}
 
-            <Tab label="Market" disableRipple icon={<Iconify icon={'healthicons:market-stall'} width={20} height={20} />} value="2" />
-            <Tab label="Drops" disableRipple icon={<Iconify icon={'fa6-solid:gift'} width={20} height={20} />} value="4" />
-            <Tab label="Holders" disableRipple icon={<Iconify icon={'icon-park-solid:passport'} width={20} height={20} />} value="3" />
+            <Tab label="Market" disableRipple icon={<Iconify icon={'flat-color-icons:shop'} width={20} height={20} />} value="2" />
+            <Tab label="Drops" disableRipple icon={<Iconify icon={'emojione:wrapped-gift'} width={20} height={20} />} value="4" />
+            <Tab label="Holders" disableRipple icon={<Iconify icon={'emojione-v1:ticket'} width={20} height={20} />} value="3" />
           </TabList>
       
           {tokenamount > 0 || address === data.owner || spaceDataById && spaceDataById.type === 'Public' ?

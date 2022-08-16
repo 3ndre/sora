@@ -38,11 +38,11 @@ export default function HomeBanner() {
       >
         <Typography gutterBottom variant="h4">
           Welcome to,
-          <br /> Soraplace!
+          <br /> Sora!
         </Typography>
 
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
-          Don't know where to start? Check out some of the free places you can join right now.
+        An NFT gated social platform for your community and your content. Explore some of the popular gated communities right away.
         </Typography>
 
         <Button variant="contained" to="/explore" component={RouterLink}>Explore</Button>
@@ -50,8 +50,8 @@ export default function HomeBanner() {
 
       {isDesktop && <MotivationIllustration
         sx={{
-          p: 3,
-          width: 360,
+        
+          width: 250,
           margin: { xs: 'auto', md: 'inherit' }
         }}
       />}

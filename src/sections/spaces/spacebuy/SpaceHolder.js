@@ -13,13 +13,23 @@ export default function SpaceHolder({ buyer }) {
         Memberpass holders
       </Typography>
 
+    {buyer.length === 0 ? 
       <Grid container spacing={3}>
-        {buyer.map((holded) => (
-          <Grid key={holded} item xs={12} md={4}>
-            <HolderCard holded={holded} />
+        
+          <Grid item xs={12} md={4}>
+            No one is holding this memberpass! 👻👻
           </Grid>
-        ))}
+       
       </Grid>
+      :
+      <Grid container spacing={3}>
+      {buyer.map((holded) => (
+        <Grid key={holded} item xs={12} md={4}>
+          <HolderCard holded={holded} />
+        </Grid>
+      ))}
+    </Grid>
+    }
     </Box>
   );
 }

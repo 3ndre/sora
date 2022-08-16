@@ -219,7 +219,9 @@ const CreateDrop = ({spaceDropById}) => {
   };
 
   const handleClose = () => {
-   
+    updateFormParams({ name: '', description: '', price: '', supplypass: ''});
+    setImgPre(null);
+    setFileURL(null);
     setOpen(false);
   };
 

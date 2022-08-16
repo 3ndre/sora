@@ -17,6 +17,7 @@ import CreateDrop from './CreateDrop';
 import BuyDrop from './BuyDrop';
 import SpaceTopCard from '../../../sections/card/SpaceTopCard';
 import SpaceChat from './SpaceChat';
+import TransferToken from '../TransferToken';
 
 
 
@@ -101,10 +102,19 @@ if(!dataFetched)
           <SpaceChat tokenamount={tokenamount} spaceDropById={spaceDropById}/>
           : 
           <span style={{cursor: 'pointer'}}>
-          <SpaceTopCard title="Members Only" color='secondary' icon={'bi:chat-left-text-fill'}/>
+          <SpaceTopCard title="Members Only" color='secondary' icon={'bxs:lock'}/>
           </span>
           }
         </Grid>
+
+
+        {isDesktop && 
+        <Grid item xs={12} sm={6} md={3} sx={{mr: 3}}>
+          <span style={{cursor: 'pointer'}}>
+            <TransferToken data={spaceDropById} tokenamount={tokenamount}/>
+          </span>
+        </Grid>}
+        
 
           </span> 
           

@@ -1,6 +1,9 @@
 // @mui
 import { styled } from '@mui/material/styles';
-import { Grid, RadioGroup, CardActionArea } from '@mui/material';
+import { Grid, RadioGroup, CardActionArea, Tooltip } from '@mui/material';
+import { Link } from 'react-router-dom';
+
+import { useAccount } from 'wagmi';
 // hooks
 import useSettings from '../../hooks/useSettings';
 //
@@ -24,29 +27,99 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
 export default function SettingMode() {
   const { themeMode, onChangeMode } = useSettings();
 
-  return (
-    <RadioGroup name="themeMode" value={themeMode} onChange={onChangeMode}>
-      <Grid dir="ltr" container spacing={2.5}>
-        {['light', 'dark'].map((mode, index) => {
-          const isSelected = themeMode === mode;
+  const { isConnected } = useAccount();
 
-          return (
-            <Grid key={mode} item xs={6}>
+  return (
+    <RadioGroup name="themeMode" >
+      <Grid dir="ltr" container spacing={2.5}>
+        
+           
+            <Grid item xs={6}>
+            <Link to="/">
+              <Tooltip title="Home" placement="bottom">
               <BoxStyle
                 sx={{
-                  bgcolor: mode === 'light' ? 'common.white' : 'grey.800',
-                  ...(isSelected && {
+                  bgcolor: 'grey.800',
                     color: 'primary.main',
-                    boxShadow: (theme) => theme.customShadows.z20,
-                  }),
-                }}
+                  }}
               >
-                <Iconify icon={index === 0 ? 'ph:sun-duotone' : 'ph:moon-duotone'} width={28} height={28} />
-                <BoxMask value={mode} />
+                <Iconify icon={'emojione-v1:house-with-garden'} width={28} height={28} />
+                <BoxMask value={'light'} />
               </BoxStyle>
+              </Tooltip>
+              </Link>
             </Grid>
-          );
-        })}
+           
+
+            <Grid item xs={6}>
+              <Link to="/explore">
+              <Tooltip title="Explore" placement="bottom">
+              <BoxStyle
+                sx={{
+                  bgcolor: 'grey.800',
+                    color: 'primary.main',
+                  }}
+              >
+                <Iconify icon={'fluent-emoji-flat:compass'} width={28} height={28} />
+                <BoxMask value={'light'} />
+              </BoxStyle>
+              </Tooltip>
+              </Link>
+            </Grid>
+
+
+            <Grid item xs={6}>
+              <Link to="/category/Gaming">
+              <Tooltip title="Category" placement="bottom">
+              <BoxStyle
+                sx={{
+                  bgcolor: 'grey.800',
+                    color: 'primary.main',
+                  }}
+              >
+                <Iconify icon={'noto:artist-palette'} width={28} height={28} />
+                <BoxMask value={'light'} />
+              </BoxStyle>
+              </Tooltip>
+              </Link>
+            </Grid>
+
+
+            {isConnected ? (
+            <Grid item xs={6}>
+              <Link to="/profile">
+            <Tooltip title="Profile" placement="bottom">
+              <BoxStyle
+                sx={{
+                  bgcolor: 'grey.800',
+                    color: 'primary.main',
+                  }}
+              >
+                <Iconify icon={'emojione:blond-haired-person-medium-light-skin-tone'} width={28} height={28} />
+                <BoxMask value={'light'} />
+              </BoxStyle>
+              </Tooltip>
+              </Link>
+            </Grid>
+            ) : (
+               <Grid item xs={6}>
+               <Link to="/connect">
+             <Tooltip title="Connect" placement="bottom">
+               <BoxStyle
+                 sx={{
+                   bgcolor: 'grey.800',
+                     color: 'primary.main',
+                   }}
+               >
+                 <Iconify icon={'logos:metamask-icon'} width={28} height={28} />
+                 <BoxMask value={'light'} />
+               </BoxStyle>
+               </Tooltip>
+               </Link>
+             </Grid>
+
+            )}
+        
       </Grid>
     </RadioGroup>
   );

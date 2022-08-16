@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+
 import { useAccount } from 'wagmi'
 // @mui
 import { styled } from '@mui/material/styles';
@@ -42,16 +42,11 @@ const InfoStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-ProfileCover.propTypes = {
-  myProfile: PropTypes.object,
-};
 
-export default function ProfileCover({ myProfile }) {
+export default function ProfileCover() {
  
 
   const { address } = useAccount()
-
-  const {  cover } = myProfile;
 
   return (
     <RootStyle>
@@ -78,7 +73,7 @@ export default function ProfileCover({ myProfile }) {
           <Typography sx={{ opacity: 0.72 }}>{address}</Typography>
         </Box>
       </InfoStyle>
-      <Image alt="profile cover" src={cover} sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
+      <Image alt="profile cover" src="" sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
     </RootStyle>
   );
 }

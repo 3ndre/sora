@@ -59,11 +59,13 @@ export default function CreatePopover() {
       console.log("User Signed In: ", res);
       localStorage.setItem('signature', JSON.stringify(data))
       navigate('/create')
+      window.location.reload()
     })
     .catch((err) => {
       console.log("Sign In unsuccessful");
       localStorage.setItem('signature', JSON.stringify(data))
       navigate('/create')
+      window.location.reload()
     })}
 
 

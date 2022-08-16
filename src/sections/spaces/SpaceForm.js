@@ -218,9 +218,9 @@ export default function SpaceForm() {
 
 
         setOpen2(false);
-        setMessage1('');
-        setMessage2('');
-        setMessage3('');
+        setMessage1('Uploading image...');
+        setMessage2('Uploading metadata...');
+        setMessage3('Confirming transaction...');
        
         updateFormParams({ name: '', description: '', price: '', supplypass: ''});
         setCategory('');
@@ -232,9 +232,9 @@ export default function SpaceForm() {
     } catch (e) {
 
         setOpen2(false);
-        setMessage1('');
-        setMessage2('');
-        setMessage3('');
+        setMessage1('Uploading image...');
+        setMessage2('Uploading metadata...');
+        setMessage3('Confirming transaction...');
        
         updateFormParams({ name: '', description: '', price: '', supplypass: ''});
         setCategory('');

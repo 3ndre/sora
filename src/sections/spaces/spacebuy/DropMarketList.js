@@ -111,6 +111,7 @@ export default function DropMarketList({data}) {
 }
 
 
+
 if(!dataFetched)
     getAllNFTs();
 

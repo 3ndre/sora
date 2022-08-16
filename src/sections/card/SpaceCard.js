@@ -78,7 +78,7 @@ export default function SpaceCard({space}) {
         />
         <Avatar
          alt=""
-          src=""
+          src={space.image}
           sx={{
             width: 64,
             height: 64,

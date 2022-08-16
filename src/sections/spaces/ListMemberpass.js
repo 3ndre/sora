@@ -34,6 +34,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const ListMemberpass = ({data, tokenamount}) => {
 
+  
+
 
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false); //alert
@@ -89,7 +91,7 @@ const ListMemberpass = ({data, tokenamount}) => {
   };
 
   const handleClose = () => {
-   
+    updateFormParams({ price: '', amount: ''});
     setOpen(false);
   };
 

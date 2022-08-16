@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import { useRef } from 'react';
+
+import { Link as RouterLink } from 'react-router-dom';
+
+import { useState } from 'react';
+import axios from 'axios';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Box, Stack, Avatar, Typography, Paper, CardHeader} from '@mui/material';
-// utils
-import { fDateTime } from '../../utils/formatTime';
-// _mock_
-import { _bookingNew } from '../../_mock';
+
+
 // components
 import Label from '../../components/Label';
 import Image from '../../components/Image';
-import Iconify from '../../components/Iconify';
+
 import { CarouselArrows } from '../../components/carousel';
 
 // ----------------------------------------------------------------------
@@ -56,6 +59,26 @@ export default function HomeTrending() {
     carouselRef.current?.slickNext();
   };
 
+  
+  const [data, updateData] = useState(null);
+  const [dataFetched, updateFetched] = useState(false);
+
+  async function getAllSpaces() {
+
+    let meta = await axios.get('http://localhost:5000/api/spaces');
+    
+    
+   
+    updateFetched(true);
+    updateData(meta.data);
+}
+
+
+
+
+if(!dataFetched)
+    getAllSpaces();
+
   return (
     <Box sx={{ py: 2 }}>
       <CardHeader
@@ -77,8 +100,8 @@ export default function HomeTrending() {
       />
 
       <Slider ref={carouselRef} {...settings}>
-        {_bookingNew.map((item) => (
-          <TrendingItem key={item.id} item={item} />
+        {data && data.map((item) => (
+          <TrendingItem key={item.tokenId} item={item} />
         ))}
       </Slider>
     </Box>
@@ -100,15 +123,15 @@ TrendingItem.propTypes = {
 };
 
 function TrendingItem({ item }) {
-  const { avatar, name, roomNumber, bookdAt, person, cover, roomType } = item;
+  
 
   return (
-    <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: 'background.neutral' }}>
+    <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: 'background.neutral' }} to={`/space/${item.tokenId}`} style={{textDecoration: 'none'}} component={RouterLink}>
 
 <Box sx={{ p: 1, position: 'relative' }}>
         <Label
           variant="filled"
-          color={(roomType === 'king' && 'error') || (roomType === 'double' && 'info') || 'warning'}
+          color={(item.category === 'Gaming' && 'error') || (item.category === 'Art' && 'info') || 'warning'}
           sx={{
             right: 16,
             zIndex: 9,
@@ -117,19 +140,16 @@ function TrendingItem({ item }) {
             textTransform: 'capitalize',
           }}
         >
-          {roomType}
+          {item.category}
         </Label>
-        <Image src={cover} ratio="1/1" sx={{ borderRadius: 1.5 }} />
+        <Image src={item.image} ratio="1/1" sx={{ borderRadius: 1.5 }} />
       </Box>
 
       <Stack spacing={2.5} sx={{ p: 3, pb: 2.5 }}>
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar alt={name} src={avatar} />
+          <Avatar alt='' src={item.image} />
           <div>
-            <Typography variant="subtitle2">{name}</Typography>
-            <Typography variant="caption" sx={{ color: 'text.disabled', mt: 0.5, display: 'block' }}>
-              {fDateTime(bookdAt)}
-            </Typography>
+            <Typography variant="subtitle2">{item.name}</Typography>
           </div>
         </Stack>
 

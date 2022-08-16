@@ -8,6 +8,7 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 
+
 // ----------------------------------------------------------------------
 
 const Loadable = (Component) => (props) => {
@@ -52,7 +53,7 @@ export default function Router() {
         { path: 'profile', element: <Profile/> },
         { path: 'space/:id', element: <SpaceBuy/> },
         { path: 'create', element: <CreateSpace/> },
-
+        { path: 'category/:category', element: <Category/> },
       ],
     },
     {
@@ -72,6 +73,7 @@ export default function Router() {
 // Dashboard
 const Home = Loadable(lazy(() => import('../pages/Home')));
 const Spaces = Loadable(lazy(() => import('../pages/Spaces')));
+const Category = Loadable(lazy(() => import('../pages/Category')));
 const CreateSpace = Loadable(lazy(() => import('../pages/CreateSpace')));
 const Connect = Loadable(lazy(() => import('../pages/Connect')));
 const Profile = Loadable(lazy(() => import('../pages/Profile')));

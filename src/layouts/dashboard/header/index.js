@@ -16,13 +16,9 @@ import { HEADER } from '../../../config';
 import Logo from '../../../components/Logo';
 
 
-//
-import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import CreatePopover from './CreatePopover';
-// import LanguagePopover from './LanguagePopover';
-// import ChatPopover from './ChatPopover';
-// import NotificationsPopover from './NotificationsPopover';
+
 import Settings from '../../../components/settings';
 
 // ----------------------------------------------------------------------
@@ -64,7 +60,7 @@ export default function DashboardHeader() {
 
         {!isDesktop && <Logo sx={{ mr: 1 }}/>}
 
-        <Searchbar />
+        
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" >
@@ -75,9 +71,7 @@ export default function DashboardHeader() {
         </>
         }
         
-          {/* <LanguagePopover />
-          <NotificationsPopover /> */}
-          {/* <ChatPopover/> */}
+       
           {isConnected && <CreatePopover />}
           {isConnected && <AccountPopover />}
           <Settings/>

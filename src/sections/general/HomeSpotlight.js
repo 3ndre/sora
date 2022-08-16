@@ -1,11 +1,12 @@
-import PropTypes from 'prop-types';
+
+import { useState } from 'react';
+import axios from 'axios';
 import Slider from 'react-slick';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Button, CardContent, Typography } from '@mui/material';
-// _mock_
-import { _ecommerceNewProducts } from '../../_mock';
+
 // components
 import Image from '../../components/Image';
 import { CarouselDots } from '../../components/carousel';
@@ -27,6 +28,8 @@ const OverlayStyle = styled('div')(({ theme }) => ({
 export default function HomeSpotlight() {
   const theme = useTheme();
 
+
+  
   const settings = {
     speed: 1000,
     dots: true,
@@ -38,11 +41,31 @@ export default function HomeSpotlight() {
     ...CarouselDots({ position: 'absolute', right: 24, bottom: 24 }),
   };
 
+
+  
+  const [data, updateData] = useState(null);
+  const [dataFetched, updateFetched] = useState(false);
+
+  async function getAllSpaces() {
+
+    let meta = await axios.get('http://localhost:5000/api/spaces');
+    
+    
+   
+    updateFetched(true);
+    updateData(meta.data);
+}
+
+
+
+if(!dataFetched)
+    getAllSpaces();
+
   return (
     <Card>
       <Slider {...settings}>
-        {_ecommerceNewProducts.map((item) => (
-          <CarouselItem key={item.name} item={item} />
+        {data && data.map((item) => (
+          <CarouselItem key={item._id} item={item} />
         ))}
       </Slider>
     </Card>
@@ -51,15 +74,10 @@ export default function HomeSpotlight() {
 
 // ----------------------------------------------------------------------
 
-CarouselItem.propTypes = {
-  item: PropTypes.shape({
-    image: PropTypes.string,
-    name: PropTypes.string,
-  }),
-};
+
 
 function CarouselItem({ item }) {
-  const { image, name } = item;
+  
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -74,17 +92,17 @@ function CarouselItem({ item }) {
         }}
       >
         <Typography variant="overline" sx={{ opacity: 0.48 }}>
-          New
+          {item.category}
         </Typography>
-        <Typography noWrap variant="h5" sx={{ mt: 1, mb: 3 }}>
-          {name}
+        <Typography noWrap variant="h5" sx={{ mt: 1, mb: 3 }} style={{textTransform: 'capitalize'}}>
+          {item.name}
         </Typography>
-        <Button to="#" variant="contained" component={RouterLink}>
+        <Button to={`/space/${item.tokenId}`} variant="contained" component={RouterLink}>
           Join Now
         </Button>
       </CardContent>
       <OverlayStyle />
-      <Image alt={name} src={image} sx={{ height: { xs: 280, xl: 320 } }} />
+      <Image alt={item.name} src={item.image} sx={{ height: { xs: 280, xl: 320 } }} />
     </Box>
   );
 }

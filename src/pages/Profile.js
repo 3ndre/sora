@@ -10,8 +10,7 @@ import { Tab, Box, Card, Tabs, Container } from '@mui/material';
 import useAuth from '../hooks/useAuth';
 import useTabs from '../hooks/useTabs';
 import useSettings from '../hooks/useSettings';
-// _mock_
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from '../_mock';
+
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -20,9 +19,6 @@ import Iconify from '../components/Iconify';
 import {
   Profile,
   ProfileCover,
-  ProfileFriends,
-  ProfileGallery,
-  ProfileFollowers,
 } from '../sections/user/profile';
 import SwitchNetwork from './SwitchNetwork';
 import { useNetwork } from 'wagmi'
@@ -59,11 +55,6 @@ export default function UserProfile() {
 
   const { currentTab, onChangeTab } = useTabs('collected');
 
-  const [findFriends, setFindFriends] = useState('');
-
-  const handleFindFriends = (value) => {
-    setFindFriends(value);
-  };
 
   const PROFILE_TABS = [
     {
@@ -71,21 +62,7 @@ export default function UserProfile() {
       icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
       component: <Profile  />,
     },
-    {
-      value: 'followers',
-      icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
-      component: <ProfileFollowers followers={_userFollowers} />,
-    },
-    {
-      value: 'friends',
-      icon: <Iconify icon={'eva:people-fill'} width={20} height={20} />,
-      component: <ProfileFriends friends={_userFriends} findFriends={findFriends} onFindFriends={handleFindFriends} />,
-    },
-    {
-      value: 'gallery',
-      icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
-      component: <ProfileGallery gallery={_userGallery} />,
-    },
+    
   ];
 
 
@@ -109,7 +86,7 @@ export default function UserProfile() {
             position: 'relative',
           }}
         >
-          <ProfileCover myProfile={_userAbout} />
+          <ProfileCover />
 
           <TabsWrapperStyle>
             <Tabs
