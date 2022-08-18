@@ -101,7 +101,7 @@ export default function SpaceMainCard2({data, tokensCollected, tokenamount}) {
     <Card sx={{ textAlign: 'center' }}>
       <Box sx={{ position: 'relative' }}>
         <SvgIconStyle
-          src="https://minimal-assets-api.vercel.app/assets/icons/shape-avatar.svg"
+          src="/icons/shape-avatar.svg"
           sx={{
             width: 144,
             height: 62,
