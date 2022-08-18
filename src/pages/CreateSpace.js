@@ -41,7 +41,7 @@ export default function CreateSpace() {
         
 
         <Typography variant="body" sx={{mb: 3, color: 'gray'}}>
-          (Create a private space for your community with <span style={{color: '#00ac56'}}>Memberpass NFT</span>)
+          (Create a space for your community with <span style={{color: '#00ac56'}}>Memberpass NFT</span>)
         </Typography>
       
         </Box>

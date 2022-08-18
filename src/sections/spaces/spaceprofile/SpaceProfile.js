@@ -137,7 +137,7 @@ if(!dataFetched)
       {isDesktop && 
       <Grid item xs={12} md={4}>
         <Stack spacing={3}>
-          <SpaceMainCard2 data={data} tokensCollected={tokensCollected}/>
+          <SpaceMainCard2 data={data} tokensCollected={tokensCollected} tokenamount={tokenamount} />
           <SpaceMemberInfo data={data} tokensCollected={tokensCollected} />
           <SpaceAbout data={spaceDropById} />
         </Stack>

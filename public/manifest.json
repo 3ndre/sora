@@ -1,6 +1,6 @@
 {
-  "name": "Sorapalce",
-  "short_name": "Sorapalace",
+  "name": "Sora",
+  "short_name": "Sora",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#00ab55",

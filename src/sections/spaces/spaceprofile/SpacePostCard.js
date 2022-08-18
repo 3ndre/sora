@@ -188,7 +188,8 @@ getAllSpaces();
       avatar={<MyAvatar />}
       title={
         <Link to="#" variant="subtitle2" color="text.primary" component={RouterLink} style={{textDecoration: 'none'}}>
-          {post.wallet}
+          {post.wallet.substring(0,15)+'...'}
+          
         </Link>
       }
       subheader={

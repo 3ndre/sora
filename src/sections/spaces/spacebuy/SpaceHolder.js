@@ -1,5 +1,6 @@
 
 import { Box, Grid, Card, Button, Avatar, Typography } from '@mui/material';
+import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -47,14 +48,7 @@ function HolderCard({ holded }) {
         </Typography>
      
       </Box>
-      <Button
-        size="small"
-      
-        variant='outlined'
-       
-      >
-        Profile
-      </Button>
+      <Iconify icon={'emojione:gem-stone'} width={40} height={40} />
     </Card>
   );
 }

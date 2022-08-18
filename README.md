@@ -1,3 +1,3 @@
-# Soraplace - Nft gated platform for your community
+# Sora - Nft gated platform for your community
 
 

@@ -5,6 +5,8 @@ import ABIS from '../../abis/abis.json';
 import { useAccount } from 'wagmi'
 import axios from 'axios';
 
+import { useNavigate } from 'react-router-dom';
+
 // mui
 import { Card, Grid, Stack, Typography, TextField, Avatar, Button } from '@mui/material';
 
@@ -45,6 +47,9 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 export default function SpaceForm() {
+
+
+  const navigate = useNavigate();
 
   const { address } = useAccount()
 
@@ -215,6 +220,8 @@ export default function SpaceForm() {
 
 
         setMessage3('Space created successfully!');
+
+        navigate('/explore');
 
 
         setOpen2(false);

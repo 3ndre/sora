@@ -29,7 +29,7 @@ export default function SpaceAbout({data}) {
         <Typography variant="body2">{data.description}</Typography>
 
         <Stack direction="row">
-          <IconStyle icon={'ic:twotone-date-range'} />
+          <IconStyle icon={'flat-color-icons:calendar'} />
           <Typography variant="body2">
             Created on &nbsp;
            
@@ -39,12 +39,12 @@ export default function SpaceAbout({data}) {
         </Stack>
 
         <Stack direction="row">
-          <IconStyle icon={'ic:outline-category'} />
+          <IconStyle icon={'emojione:artist-palette'} />
           <Typography variant="body2">{data.category}</Typography>
         </Stack>
 
         <Stack direction="row">
-          <IconStyle icon={'fluent:document-page-number-24-regular'} />
+          <IconStyle icon={'noto:id-button'} />
           <Typography variant="body2">
             ID - &nbsp;
             
@@ -54,7 +54,7 @@ export default function SpaceAbout({data}) {
         </Stack>
 
         <Stack direction="row">
-          <IconStyle icon={'akar-icons:link-chain'} />
+          <IconStyle icon={'noto:chains'} />
           <Typography variant="body2">
             View on  &nbsp;
             <a href={`https://mumbai.polygonscan.com/token/${data.contractAddress}?a=${data.tokenId}`} target="_blank" rel="noreferrer" variant="subtitle2" style={{color: '#00ac56', textDecoration: 'none'}}>

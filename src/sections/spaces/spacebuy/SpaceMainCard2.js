@@ -1,4 +1,14 @@
-import { Box, Card, Avatar, Typography} from '@mui/material';
+import React, { useState } from 'react';
+import ABIS from '../../../abis/abis.json';
+import { Box, Card, Avatar, Typography, Button} from '@mui/material';
+import { useAccount } from 'wagmi';
+//mui alert
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+import {Stack} from "@mui/material";
+
 
 
 // components
@@ -8,11 +18,86 @@ import SvgIconStyle from '../../../components/SvgIconStyle';
 // ----------------------------------------------------------------------
 
 
-export default function SpaceMainCard2({data, tokensCollected}) {
+//global variables
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
+
+export default function SpaceMainCard2({data, tokensCollected, tokenamount}) {
+
+  const { address } = useAccount();
+
+
+  const totalSupply = parseInt(data.supplypass);
+
+  const [open, setOpen] = useState(false);
+  const [loadButton, setLoadButton] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [message, setMessage] = useState("");
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+
+    
+
+
+  async function buyPass(tokenId) {
+    try{
+
+        setLoadButton(true);
+
+        const ethers = require("ethers");
+        //After adding your Hardhat network to your metamask, this code will get providers and signers
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+
+        //Pull the deployed contract instance
+        let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer);
+        const salePrice = ethers.utils.parseUnits(data.price, 'ether')
+      
+        //run the executeSale function
+        let transaction = await contract.purchaseToken(data.listingId, 1, {value: salePrice});
+        await transaction.wait();
+
+        setMessage("You successfully bought the Memberpass!");
+        setLoadButton(false);
+        setOpen(true);
+        window.location.reload();
+        
+    }
+    catch(e) {
+      setAlertMessage(e.message.replace('MetaMask Tx Signature: User denied transaction signature.', 'User denied transaction signature!'));
+      setLoadButton(false);
+      setOpen(true);
+    }
+}
 
 
 
   return (
+    <>
+    <Stack spacing={2} sx={{ width: '100%' }}>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      {alertMessage ?
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+        : 
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        {message}
+      </Alert>
+        }
+    
+    </Snackbar>
+  </Stack>
+
     <Card sx={{ textAlign: 'center' }}>
       <Box sx={{ position: 'relative' }}>
         <SvgIconStyle
@@ -55,7 +140,35 @@ export default function SpaceMainCard2({data, tokensCollected}) {
         {data.description}
       </Typography>
 
+
+      {tokensCollected === totalSupply ? 
+        <><Button variant="contained" disabled sx={{mb: 1}}>
+           Sold out
+          </Button>
+          <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
+            (Check the market for available memberpass)
+          </Typography>
+          </>
+
+        : loadButton === true ?
+        <>
+        <Button variant="contained" disabled sx={{mb: 3}} >
+                Processing...
+        </Button>
+        </>
+        : data.owner === address || tokenamount > 0 ?
+        null
+        :  
+        <>
+        <Button variant="contained" sx={{mb: 3}} onClick={() => buyPass(data.tokenId)}>
+                Buy memberpass
+        </Button>
+        </> 
+        }
+
+
     
     </Card>
+    </>
   );
 }
