@@ -78,7 +78,7 @@ export default function SpacePostCard({tokenId, tokenamount}) {
 
     const userSignature = JSON.parse(localStorage.getItem('signature'))
    
-    let meta = await axios.get('http://localhost:5000/api/spaces');
+    let meta = await axios.get('https://sora-backend.glitch.me/api/spaces');
 
    const space_id = meta.data.find(x => x.tokenId === parseInt(tokenId))._id; //space id from backend
    setSpaceDeleteId(space_id);
@@ -91,7 +91,7 @@ export default function SpacePostCard({tokenId, tokenamount}) {
     }
   };
 
-   let meta2 = await axios.get(`http://localhost:5000/api/spaces/${space_id}`, axiosConfig);
+   let meta2 = await axios.get(`https://sora-backend.glitch.me/api/spaces/${space_id}`, axiosConfig);
 
 
     updateFetched(true);
@@ -111,7 +111,7 @@ async function deletePost(_id) {
         }
       };
 
-      await axios.delete(`http://localhost:5000/api/spaces/post/${spacedeleteId}/${_id}`, axiosConfig)
+      await axios.delete(`https://sora-backend.glitch.me/api/spaces/post/${spacedeleteId}/${_id}`, axiosConfig)
       .then((res) => {
         setMessage("Deleted successfully!");
         window.location.reload();

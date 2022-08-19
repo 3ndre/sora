@@ -61,7 +61,7 @@ export default function SpaceBuy() {
 
     const userSignature = JSON.parse(localStorage.getItem('signature'))
    
-    let meta = await axios.get('http://localhost:5000/api/spaces');
+    let meta = await axios.get('https://sora-backend.glitch.me/api/spaces');
 
    const space_id = meta.data.find(x => x.tokenId === parseInt(tokenId))._id; //space id from backend
   
@@ -74,7 +74,7 @@ export default function SpaceBuy() {
     }
   };
 
-   let meta2 = await axios.get(`http://localhost:5000/api/spaces/${space_id}`, axiosConfig);
+   let meta2 = await axios.get(`https://sora-backend.glitch.me/api/spaces/${space_id}`, axiosConfig);
 
     setSpaceDataById(meta2.data); //getting space data by id
 }

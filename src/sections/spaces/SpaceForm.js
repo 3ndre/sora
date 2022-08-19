@@ -93,7 +93,7 @@ export default function SpaceForm() {
   
   async function getAllCategory() {
 
-    let category = await axios.get('http://localhost:5000/api/category');
+    let category = await axios.get('https://sora-backend.glitch.me/api/category');
     setFetchCategory(category.data);//getting category
 }
 //--------------------------------------------------------------------------
@@ -207,7 +207,7 @@ export default function SpaceForm() {
         };
         
         
-        axios.post('http://localhost:5000/api/spaces', postData, axiosConfig)
+        axios.post('https://sora-backend.glitch.me/api/spaces', postData, axiosConfig)
         .then((res) => {
           console.log("Space created successfully!");
         })

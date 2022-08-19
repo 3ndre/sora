@@ -71,7 +71,7 @@ export default function Spaces() {
     // const key = 'tokenId';
     // const arrayUniqueByKey = [...new Map(items.map(item => [item[key], item])).values()];
 
-    let meta = await axios.get('http://localhost:5000/api/spaces');
+    let meta = await axios.get('https://sora-backend.glitch.me/api/spaces');
 
     
     

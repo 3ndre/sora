@@ -69,7 +69,7 @@ export default function ProfileCover() {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          <Typography variant="h4">Name</Typography>
+          <Typography variant="h4">Unnamed</Typography>
           <Typography sx={{ opacity: 0.72 }}>{address}</Typography>
         </Box>
       </InfoStyle>

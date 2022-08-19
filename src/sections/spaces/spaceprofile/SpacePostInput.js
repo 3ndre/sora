@@ -54,7 +54,7 @@ export default function SpacePostInput({tokenId}) {
 
   async function getAllSpaces() {
    
-    let meta = await axios.get('http://localhost:5000/api/spaces');
+    let meta = await axios.get('https://sora-backend.glitch.me/api/spaces');
 
    const space_id = meta.data.find(x => x.tokenId === parseInt(tokenId))._id;
 
@@ -83,7 +83,7 @@ export default function SpacePostInput({tokenId}) {
     };
     
     
-    axios.post(`http://localhost:5000/api/spaces/post/${spacepostid}`, postData, axiosConfig)
+    axios.post(`https://sora-backend.glitch.me/api/spaces/post/${spacepostid}`, postData, axiosConfig)
     .then((res) => {
       setAlertMessage("")
       setMessage("Post created successfully!");

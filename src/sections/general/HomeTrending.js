@@ -65,7 +65,7 @@ export default function HomeTrending() {
 
   async function getAllSpaces() {
 
-    let meta = await axios.get('http://localhost:5000/api/spaces');
+    let meta = await axios.get('https://sora-backend.glitch.me/api/spaces');
     
     
    

@@ -24,7 +24,7 @@ export default function Home() {
   //----------------------------------------------------------------------
   async function getSpace() {
    
-    let meta = await axios.get('http://localhost:5000/api/spaces');
+    let meta = await axios.get('https://sora-backend.glitch.me/api/spaces');
 
     setSpaceData(meta.data); //getting space data 
 }

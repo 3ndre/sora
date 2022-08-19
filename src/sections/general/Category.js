@@ -56,7 +56,7 @@ export default function Category() {
 
   async function getAllCategory() {
 
-    let meta = await axios.get('http://localhost:5000/api/category');
+    let meta = await axios.get('https://sora-backend.glitch.me/api/category');
     
     
    

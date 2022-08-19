@@ -70,7 +70,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src="/mages/a.jpg" alt="Avatar static" />
+        <Avatar src="" alt="Avatar static" />
       </IconButtonAnimate>
 
       <MenuPopover

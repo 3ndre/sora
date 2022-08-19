@@ -166,7 +166,7 @@ const CreateDrop = ({spaceDropById}) => {
             };
             
             
-            axios.post(`http://localhost:5000/api/spaces/drop/${spaceDropById._id}`, postData, axiosConfig)
+            axios.post(`https://sora-backend.glitch.me/api/spaces/drop/${spaceDropById._id}`, postData, axiosConfig)
             .then((res) => {
               console.log("Drop created successfully!");
             })

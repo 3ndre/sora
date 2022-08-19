@@ -64,6 +64,7 @@ const Connect = () => {
                 </>
              
       {connectors.map((connector) => (
+        <>
          <Button  disabled={!connector.ready}
          key={connector.id}
          startIcon={<img alt="Metamask Icon" height={26} width={26} src="/icons/metamask.svg" />} fullWidth size="large" style={{background: '#212B36', color: 'white'}}
@@ -77,6 +78,11 @@ const Connect = () => {
             connector.id === pendingConnector?.id &&
             ' (connecting)'}
         </Button>
+        <br></br>
+         
+        {!connector.ready && <a href="https://metamask.io/download/" target="_blank" rel="noopener noreferrer" style={{color: 'gray', textDecoration: 'none', fontWeight: 'bold'}}>Download Metamask</a>}
+     
+        </>
       ))}
 
       {error && <div>{error.message}</div>}
