@@ -139,7 +139,7 @@ if(!dataFetched)
         <Stack spacing={3}>
           <SpaceMainCard2 data={data} tokensCollected={tokensCollected} tokenamount={tokenamount} />
           <SpaceMemberInfo data={data} tokensCollected={tokensCollected} />
-          <SpaceAbout data={spaceDropById} />
+           {spaceDropById && spaceDropById.drops.length > 0 && <SpaceAbout data={spaceDropById} />} 
         </Stack>
       </Grid>
       }

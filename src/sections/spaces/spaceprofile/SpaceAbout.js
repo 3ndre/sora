@@ -20,7 +20,6 @@ const IconStyle = styled(Iconify)(({ theme }) => ({
 export default function SpaceAbout({data}) {
   
   
-
   return (
     <Card>
       <CardHeader title="About" />
