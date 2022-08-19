@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -16,6 +18,11 @@ import Label from '../../components/Label';
 import Image from '../../components/Image';
 
 import { CarouselArrows } from '../../components/carousel';
+
+
+import { useSignMessage } from 'wagmi'
+import { useAccount } from 'wagmi'
+// ---------------------------------------
 
 // ----------------------------------------------------------------------
 
@@ -123,12 +130,50 @@ TrendingItem.propTypes = {
 };
 
 function TrendingItem({ item }) {
+
+
+  const { address } = useAccount()
+
+  const navigate = useNavigate()
+
+  
+  const { data, signMessage } = useSignMessage({
+    message: `Welcome to Soraspace! Click to accept the terms and conditions! User: ${address}`,
+  })
+
+ 
+    var postData = {
+      wallet: address,
+      signature: data,
+    };
+    
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
+    
+    if(data && address !== null) {
+    axios.post('https://sora-backend.glitch.me/api/users', postData, axiosConfig)
+    .then((res) => {
+      console.log("User Signed In: ", res);
+      localStorage.setItem('signature', JSON.stringify(data))
+      navigate(`/space/${item.tokenId}`)
+    })
+    .catch((err) => {
+      console.log("Sign In unsuccessful");
+      localStorage.setItem('signature', JSON.stringify(data))
+      navigate(`/space/${item.tokenId}`)
+    })}
   
 
   return (
-    <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: 'background.neutral' }} to={`/space/${item.tokenId}`} style={{textDecoration: 'none'}} component={RouterLink}>
+    <span>
+    {localStorage.getItem('signature') === null ?
+    <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: 'background.neutral' }} onClick={() => signMessage()} style={{cursor: 'pointer'}}>
 
-<Box sx={{ p: 1, position: 'relative' }}>
+    <Box sx={{ p: 1, position: 'relative' }}>
         <Label
           variant="filled"
           color={(item.category === 'Gaming' && 'error') || (item.category === 'Art' && 'info') || 'warning'}
@@ -158,5 +203,43 @@ function TrendingItem({ item }) {
 
       
     </Paper>
+
+    :
+
+    <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: 'background.neutral' }} to={`/space/${item.tokenId}`} style={{textDecoration: 'none'}} component={RouterLink}>
+
+    <Box sx={{ p: 1, position: 'relative' }}>
+        <Label
+          variant="filled"
+          color={(item.category === 'Gaming' && 'error') || (item.category === 'Art' && 'info') || 'warning'}
+          sx={{
+            right: 16,
+            zIndex: 9,
+            bottom: 16,
+            position: 'absolute',
+            textTransform: 'capitalize',
+          }}
+        >
+          {item.category}
+        </Label>
+        <Image src={item.image} ratio="1/1" sx={{ borderRadius: 1.5 }} />
+      </Box>
+
+      <Stack spacing={2.5} sx={{ p: 3, pb: 2.5 }}>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Avatar alt='' src={item.image} />
+          <div>
+            <Typography variant="subtitle2">{item.name}</Typography>
+          </div>
+        </Stack>
+
+      
+      </Stack>
+
+      
+    </Paper>
+
+        }
+        </span>
   );
 }
