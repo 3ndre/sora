@@ -22,7 +22,7 @@ import { useAccount } from 'wagmi'
 export default function SpaceCard({space}) {
 
 
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
 
   const navigate = useNavigate()
 
@@ -102,9 +102,15 @@ export default function SpaceCard({space}) {
         {space.description}
       </Typography>
 
+      
+      {!isConnected ? 
+      <Stack sx={{py: 2}} alignItems="center">
+        <Button to='/connect' variant="contained" component={RouterLink}>Visit</Button>
+      </Stack> 
+      :
       <Stack sx={{py: 2}} alignItems="center">
       {localStorage.getItem('signature') === null ? <Button  variant="contained"onClick={() => signMessage()}>Visit</Button> : <Button to={`/space/${space.tokenId}`} variant="contained" component={RouterLink}>Visit</Button>}
-      </Stack>
+      </Stack>}
 
 
       
