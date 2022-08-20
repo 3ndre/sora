@@ -42,6 +42,7 @@ export default function SpaceMarketList({data, tokenamount}) {
 
 
 
+
   const { themeStretch } = useSettings();
 
 
@@ -75,8 +76,9 @@ export default function SpaceMarketList({data, tokenamount}) {
       
         const tokenURI = await contract.uri(i.tokenId);
         
-        let meta = await axios.get(tokenURI);
-        meta = meta.data;
+      
+
+     
 
        
        
@@ -92,9 +94,9 @@ export default function SpaceMarketList({data, tokenamount}) {
             contractAddress: i.contractAddress,
             listingId: i.listingId.toNumber(),
             supply: i.tokensAvailable.toNumber(),
-            image: meta.image,
-            name: meta.name,
-            description: meta.description,
+            image: data.image,
+            name: data.name,
+            description: data.description,
         }
         return item;
     }))

@@ -102,6 +102,7 @@ export default function SpaceBuy() {
 
 
 
+
   async function getNFTData(tokenId) {
     const ethers = require("ethers");
     //After adding your Hardhat network to your metamask, this code will get providers and signers
@@ -116,14 +117,34 @@ export default function SpaceBuy() {
     //Fetch all the details of every NFT through the listing ID
     let transactionbyId = await contract.viewAllListings()
 
+    //----------------------------------------------------------------------
+
+    const userSignature = JSON.parse(localStorage.getItem('signature'))
+   
+    let meta = await axios.get('https://sora-backend.glitch.me/api/spaces');
+
+   const space_id = meta.data.find(x => x.tokenId === parseInt(tokenId))._id; //space id from backend
+  
+
+   let axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+        "x-auth-token": userSignature.toString(),
+    }
+  };
+
+   let meta2 = await axios.get(`https://sora-backend.glitch.me/api/spaces/${space_id}`, axiosConfig);
+
+
+
+
+    //----------------------------------------------------------------------
+
     const items = await Promise.all(transactionbyId.map(async i => {
 
       
       const tokenURI = await contract.uri(i.tokenId);
-      
-      let meta = await axios.get(tokenURI);
-      meta = meta.data;
-     
      
 
       let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
@@ -135,9 +156,9 @@ export default function SpaceBuy() {
           contractAddress: i.contractAddress,
           listingId: i.listingId.toNumber(),
           supply: i.tokensAvailable.toNumber(),
-          image: meta.image,
-          name: meta.name,
-          description: meta.description,
+          image: meta2.data.image,
+          name: meta2.data.name,
+          description: meta2.data.description,
       }
      
 
@@ -159,10 +180,6 @@ export default function SpaceBuy() {
     const listedToken = await contract.viewListingById(uniquelistingID);
    
 
-    
-    let meta = await axios.get(tokenURI);
-    meta = meta.data;
-
     const listingId = listedToken.listingId.toNumber();
     const allBuyers = listedToken.buyer;
 
@@ -173,15 +190,15 @@ export default function SpaceBuy() {
    
 
     let item = {
-        price: meta.price,
+        price: meta2.data.price,
         tokenId: tokenId,
         seller: listedToken.seller,
         owner: listedToken.seller,
         contractAddress: listedToken.contractAddress,
-        image: meta.image,
-        name: meta.name,
-        description: meta.description,
-        supplypass: meta.supplypass,
+        image: meta2.data.image,
+        name: meta2.data.name,
+        description: meta2.data.description,
+        supplypass: meta2.data.supply,
         listingId: listingId,
     }
 
@@ -203,6 +220,9 @@ useEffect(() => {
     getNFTData(tokenId);
 }
 }, [address])
+
+
+
 
 
   // console.log(spaceDataById)

@@ -56,6 +56,8 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
 
 
 
+    console.log(price)
+
     async function buylistedToken(e, listingId) {
       e.preventDefault();
   
@@ -69,6 +71,7 @@ const ListingBuy = ({listingId, availableamount, price, completed}) => {
           let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer);
   
           const salePrice = ethers.utils.parseUnits(price, 'ether')
+         
   
           let buylisting = await contract.purchaseToken(listingId, formParams.amount, {value: salePrice});
           await buylisting.wait();

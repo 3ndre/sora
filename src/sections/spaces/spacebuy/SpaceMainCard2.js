@@ -60,7 +60,7 @@ export default function SpaceMainCard2({data, tokensCollected, tokenamount}) {
 
         //Pull the deployed contract instance
         let contract = new ethers.Contract(ABIS.address, ABIS.abi, signer);
-        const salePrice = ethers.utils.parseUnits(data.price, 'ether')
+        const salePrice = ethers.utils.parseUnits(data.price.toString(), 'ether')
       
         //run the executeSale function
         let transaction = await contract.purchaseToken(data.listingId, 1, {value: salePrice});
@@ -86,11 +86,11 @@ export default function SpaceMainCard2({data, tokensCollected, tokenamount}) {
     <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
       {alertMessage ?
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%', color: 'white' }}>
           {alertMessage}
         </Alert>
         : 
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%', color: 'white' }}>
         {message}
       </Alert>
         }
