@@ -37,8 +37,6 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
     Counters.Counter private _numOfTxs;
     uint256 private _volume;
 
-    // Initializing variables
-
     event TokenListed(address contractAddress, address seller, uint256 tokenId, uint256 amount, uint256 pricePerToken, address[] privateBuyer, bool privateSale, uint listingId);
     event TokenSold(address contractAddress, address seller, address buyer, uint256 tokenId, uint256 amount, uint256 pricePerToken, bool privateSale);
     event ListingDeleted(address contractAddress, uint listingId);
@@ -66,7 +64,6 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
     }
 
 
-    // Mints a new token and adds it to the list of listings returning listing id.
     function mint( string memory tokenURI, uint256 tokenID, uint256 amount, uint256 price, address[] memory privateBuyer)
         public
     {
@@ -82,11 +79,11 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
 
     }
 
+
     function uri(uint256 tokenId) override public view 
     returns (string memory) { 
         return(_tokenURIs[tokenId]); 
     } 
-
     function _setTokenUri(uint256 tokenId, string memory tokenURI)
     private {
          _tokenURIs[tokenId] = tokenURI; 
@@ -94,8 +91,7 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
 
 
 
-    // listToken takes relevant information and saves the unpaid transaction to idToListing while emititting the event and returning the listingId.
-    // Could potentially lead to re-entrancy, https://docs.soliditylang.org/en/v0.8.7/security-considerations.html#re-entrancy
+
     function listToken(address contractAddress, uint256 tokenId, uint256 amount, uint256 price, address[] memory privateBuyer) public returns(uint256) {
         ERC1155 token = ERC1155(contractAddress);
 
@@ -114,13 +110,9 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
         return _listingIds.current();
     }
 
-    // purchaseToken takes listingId and amount to process the transaction while taking fee(2%) from the seller.
-    // Could potentially lead to re-entrancy, https://docs.soliditylang.org/en/v0.8.7/security-considerations.html#re-entrancy
-
     function purchaseToken(uint256 listingId, uint256 amount) public payable {
         ERC1155 token = ERC1155(idToListing[listingId].contractAddress);
 
-        // Loop is not over a certain iteration, which may lead to contracts being stalled because iterations being more than block gas limit. 
         if(idToListing[listingId].privateListing == true) {
             bool whitelisted = false;
             for(uint i=0; i<idToListing[listingId].buyer.length; i++){
@@ -131,11 +123,11 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
             require(whitelisted == true, "Sale is private!");
         }
 
-        require(msg.sender != idToListing[listingId].seller, "Can't buy your own tokens!");
-        require(amount == 1, "You can only get one token at a time.");
+        require(msg.sender != idToListing[listingId].seller, "Can't buy your onw tokens!");
+        require(amount == 1, "You can only get one token at a time");
         require(msg.value >= idToListing[listingId].price * amount, "Insufficient funds!");
         require(token.balanceOf(idToListing[listingId].seller, idToListing[listingId].tokenId) >= amount, "Seller doesn't have enough tokens!");
-        require(idToListing[listingId].completed == false, "Listing is not available anymore!");
+        require(idToListing[listingId].completed == false, "Listing not available anymore!");
         require(idToListing[listingId].tokensAvailable >= amount, "Not enough tokens left!");
         
         _numOfTxs.increment();
@@ -166,7 +158,6 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
         payable(idToListing[listingId].seller).transfer((idToListing[listingId].price * amount/50)*49); //Transfering 98% to seller, fee 2%  ((msg.value/50)*49)
     }
 
-    // deleteListing takes listingId to delete the listing if permission is there.
     function deleteListing(uint _listingId) public {
         require(msg.sender == idToListing[_listingId].seller, "Not caller's listing!");
         require(idToListing[_listingId].completed == false, "Listing not available!");
@@ -177,22 +168,18 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
         emit ListingDeleted(idToListing[_listingId].contractAddress, _listingId);
     }
 
-    // viewAllListings returns all the listings.
     function  viewAllListings() public view returns (Listing[] memory) {
         return listingsArray;
     }
 
-    // Get a listing by id.
     function viewListingById(uint256 _id) public view returns(Listing memory) {
         return idToListing[_id];
     }
 
-    // View the number of transactions.
     function viewStats() public view returns(Stats memory) {
         return Stats(_volume, _numOfTxs.current());
     }
 
-    // View how much can be withdrawed.
     function withdrawFees() public onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }
