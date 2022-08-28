@@ -44,7 +44,9 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
     event ListingDeleted(address contractAddress, uint listingId);
 
     mapping(uint256 => Listing) private idToListing;
-    mapping (uint256 => string) private _tokenURIs;
+    mapping(uint256 => string) private _tokenURIs;
+    mapping(address => uint256) private _sellerBalance;
+
     Listing[] private listingsArray;
 
     struct Listing {
@@ -119,6 +121,7 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
 
     function purchaseToken(uint256 listingId, uint256 amount) public payable {
         ERC1155 token = ERC1155(idToListing[listingId].contractAddress);
+        address seller_id = idToListing[listingId].seller;
 
         // Loop is not over a certain iteration, which may lead to contracts being stalled because iterations being more than block gas limit. 
         if(idToListing[listingId].privateListing == true) {
@@ -131,10 +134,10 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
             require(whitelisted == true, "Sale is private!");
         }
 
-        require(msg.sender != idToListing[listingId].seller, "Can't buy your own tokens!");
+        require(msg.sender != seller_id, "Can't buy your own tokens!");
         require(amount == 1, "You can only get one token at a time.");
         require(msg.value >= idToListing[listingId].price * amount, "Insufficient funds!");
-        require(token.balanceOf(idToListing[listingId].seller, idToListing[listingId].tokenId) >= amount, "Seller doesn't have enough tokens!");
+        require(token.balanceOf(seller_id, idToListing[listingId].tokenId) >= amount, "Seller doesn't have enough tokens!");
         require(idToListing[listingId].completed == false, "Listing is not available anymore!");
         require(idToListing[listingId].tokensAvailable >= amount, "Not enough tokens left!");
         
@@ -154,7 +157,7 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
 
         emit TokenSold(
             idToListing[listingId].contractAddress,
-            idToListing[listingId].seller,
+            seller_id,
             msg.sender,
             idToListing[listingId].tokenId,
             amount,
@@ -162,8 +165,16 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
             idToListing[listingId].privateListing
         );
         setApprovalForAll(address(this), true); //approval given to marketplace
-        token.safeTransferFrom(idToListing[listingId].seller, msg.sender, idToListing[listingId].tokenId, amount, "");
-        payable(idToListing[listingId].seller).transfer((idToListing[listingId].price * amount/50)*49); //Transfering 98% to seller, fee 2%  ((msg.value/50)*49)
+        token.safeTransferFrom(seller_id, msg.sender, idToListing[listingId].tokenId, amount, "");
+        uint256 amount_earned_seller = (idToListing[listingId].price * amount/50)*49;
+        
+        // try to get seller balance
+        if(_sellerBalance[seller_id] == 0){
+            _sellerBalance[seller_id] = amount_earned_seller;
+        } else {
+            _sellerBalance[seller_id] += amount_earned_seller;
+        }
+        // payable(idToListing[listingId].seller).transfer((idToListing[listingId].price * amount/50)*49); //Transfering 98% to seller, fee 2%  ((msg.value/50)*49)
     }
 
     // deleteListing takes listingId to delete the listing if permission is there.
@@ -192,9 +203,22 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
         return Stats(_volume, _numOfTxs.current());
     }
 
-    // View how much can be withdrawed.
+    // Withdraw the fee accumulated on smart contract.
     function withdrawFees() public onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
+    }
+
+    // Get the balance of the seller.
+    function getSellerBalance(address _seller) public view returns(uint256) {
+        return _sellerBalance[_seller];
+    }
+
+    // Withdraw the balance of the seller.
+    function withdrawSellerBalance(address _seller, uint256 amount) public onlyOwner {
+        require(amount > 0, "Amount must be greater than 0!");
+        require(_sellerBalance[_seller] >= amount, "Insufficient funds!");
+        _sellerBalance[_seller] -= amount;
+        payable(msg.sender).transfer(amount);
     }
 
 
