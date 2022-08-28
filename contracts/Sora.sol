@@ -174,6 +174,7 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
         } else {
             _sellerBalance[seller_id] += amount_earned_seller;
         }
+
         // payable(idToListing[listingId].seller).transfer((idToListing[listingId].price * amount/50)*49); //Transfering 98% to seller, fee 2%  ((msg.value/50)*49)
     }
 
@@ -204,22 +205,21 @@ contract Sora is ERC1155, Ownable, ERC1155Supply {
     }
 
     // Withdraw the fee accumulated on smart contract.
-    function withdrawFees() public onlyOwner {
+    function withdrawFees() public payable onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }
 
     // Get the balance of the seller.
     function getSellerBalance(address _seller) public view returns(uint256) {
-        return _sellerBalance[_seller];
+        return (_sellerBalance[_seller]);
     }
 
     // Withdraw the balance of the seller.
-    function withdrawSellerBalance(address _seller, uint256 amount) public onlyOwner {
+    function withdrawSellerBalance(address _seller, uint256 amount) payable public {
         require(amount > 0, "Amount must be greater than 0!");
         require(_sellerBalance[_seller] >= amount, "Insufficient funds!");
         _sellerBalance[_seller] -= amount;
         payable(msg.sender).transfer(amount);
     }
-
 
 }
